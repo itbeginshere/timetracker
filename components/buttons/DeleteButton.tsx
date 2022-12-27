@@ -28,7 +28,7 @@ const DeleteButton = (props : IDeleteButtonProps) => {
     return (
         <>
             <div onClick={openDialog}>
-                <DeleteSVG />
+                <DeleteSVG className={''}/>
             </div>
             <DeleteDialog 
                 open={open}

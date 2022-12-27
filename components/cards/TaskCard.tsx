@@ -1,13 +1,40 @@
+import { useEffect, useState } from 'react';
 import DeleteButton from '../buttons/DeleteButton';
 import EditSVG from '../svgs/EditSVG';
-import PauseSVG from '../svgs/PauseSVG';
 import UnCheckedSVG from '../svgs/UnCheckedSVG';
+import Duration from './taskCard/Duration';
+import PlayButton from '../buttons/PlayButton';
+import Completed from './taskCard/Completed';
 
 interface ITaskCardProps {
     
 }
 
 const TaskCard = (props : ITaskCardProps) => {
+    
+    const [playing, setPlaying] = useState<boolean>(false);
+    const [duration, setDuration] = useState<number>(0);
+    
+    const togglePlaying = () => {
+        setPlaying(!playing);
+    };
+
+    useEffect(() => {
+      let interval : any = undefined;
+
+      if (!playing) {
+        clearInterval(interval);
+        return;
+      }
+    
+      interval = setInterval(() => {
+        setDuration((duration) => duration + 1000);
+      }, 1000);
+      
+      return () => clearInterval(interval);
+
+    }, [playing])
+
     return (
         <div className={`bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 w-full box-border ${true ? 'border-primary' : 'border-neutral-900'} width`}>
             <div className={'flex flex-row justify-between pb-6'}>
@@ -19,11 +46,11 @@ const TaskCard = (props : ITaskCardProps) => {
             </div>
             <div className={'flex flex-row justify-between items-center'}>
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <PauseSVG />
-                    <span>20:00</span>
+                    <PlayButton playing={playing} onClick={togglePlaying}/>
+                    <Duration value={duration} />
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <UnCheckedSVG />
+                    <Completed value={true} />
                     <EditSVG />
                 </div>
             </div>
