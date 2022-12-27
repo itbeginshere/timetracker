@@ -22,7 +22,6 @@ const DeleteButton = (props : IDeleteButtonProps) => {
     };
 
     const deleteTask = () => {
-
         closeDialog();
     };
 
