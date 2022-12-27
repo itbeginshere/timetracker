@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Appbar from '../components/system/Appbar'
 import Background from '../components/system/Background'
+import Content from '../components/system/Content'
 
 export default function Home() {
   return (
@@ -11,9 +12,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Appbar />
       <Background />
-      
+      <Appbar />
+      <Content />
     </>
   )
 }
