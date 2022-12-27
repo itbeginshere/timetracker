@@ -2,7 +2,7 @@ import React from 'react';
 
 const LogoSVG = (props : React.SVGProps<SVGSVGElement>) => {
 
-    const { width = 35, height = 35, fill = 'black', ...rest } = props;
+    const { width = 40, height = 40, fill = 'black', ...rest } = props;
 
     return (
         <svg width={width} height={height} viewBox="0 0 90 90" fill={fill} {...rest} xmlns="http://www.w3.org/2000/svg">
