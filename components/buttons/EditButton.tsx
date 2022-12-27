@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { ITask } from '../../models/task/task';
-import DeleteDialog from '../dialogs/DeleteDialog';
-import DeleteSVG from '../svgs/DeleteSVG';
+import EditDialog from '../dialogs/EditDialog';
+import EditSVG from '../svgs/EditSVG';
 
-interface IDeleteButtonProps {
+interface IEditButtonProps {
     task ?: ITask;
 }
 
-const DeleteButton = (props : IDeleteButtonProps) => {
-    
+const EditButton = (props : IEditButtonProps) => {
+
     const { task } = props;
 
     const [open, setOpen] = useState<boolean>(false);
-    
+
     const openDialog = () => {
         setOpen(true);
     };
@@ -21,23 +21,22 @@ const DeleteButton = (props : IDeleteButtonProps) => {
         setOpen(false);
     };
 
-    const deleteTask = () => {
+    const saveTask = () => {
         closeDialog();
     };
 
     return (
         <>
             <div className={'cursor-pointer p-1'} onClick={openDialog}>
-                <DeleteSVG/>
+                <EditSVG />
             </div>
-            <DeleteDialog 
-                open={open}
-                task={task}
-                onConfirm={deleteTask}
-                onDecline={closeDialog}
+            <EditDialog 
+                open={open} 
+                onSave={saveTask}
+                onClose={closeDialog}
             />
         </>
-    )
-};
+    );
+}
 
-export default DeleteButton;
+export default EditButton;

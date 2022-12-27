@@ -5,6 +5,7 @@ import UnCheckedSVG from '../svgs/UnCheckedSVG';
 import Duration from './taskCard/Duration';
 import PlayButton from '../buttons/PlayButton';
 import Completed from './taskCard/Completed';
+import EditButton from '../buttons/EditButton';
 
 interface ITaskCardProps {
     
@@ -51,7 +52,7 @@ const TaskCard = (props : ITaskCardProps) => {
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
                     <Completed value={true} />
-                    <EditSVG />
+                    <EditButton />
                 </div>
             </div>
         </div>
