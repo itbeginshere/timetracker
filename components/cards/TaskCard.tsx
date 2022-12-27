@@ -1,3 +1,4 @@
+import DeleteButton from '../buttons/DeleteButton';
 import DeleteSVG from '../svgs/DeleteSVG';
 import EditSVG from '../svgs/EditSVG';
 import PauseSVG from '../svgs/PauseSVG';
@@ -15,7 +16,7 @@ const TaskCard = (props : ITaskCardProps) => {
                     <span className={'font-semibold text-lg'}>{'Task name'}</span>
                     <span className={'font-medium text-sm'}>{'Description'}</span>
                 </div>
-                <DeleteSVG />
+                <DeleteButton />
             </div>
             <div className={'flex flex-row justify-between items-center'}>
                 <div className={'flex flex-row gap-2 items-center'}>
