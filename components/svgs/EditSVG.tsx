@@ -2,7 +2,7 @@ import React from 'react';
 
 const EditSVG = (props : React.SVGProps<SVGSVGElement>) => {
     
-    const { width = 35, height = 35, fill = 'black', ...rest } = props;
+    const { width = 24, height = 24, fill = 'black', ...rest } = props;
     
     return (
         <svg width={width} height={height} viewBox="0 0 35 35" {...rest} fill={fill} xmlns="http://www.w3.org/2000/svg">
