@@ -19,7 +19,7 @@ const PlayButton = (props : IPlayButton) => {
         >
             {
                 playing ? 
-                    <PauseSVG /> :
+                    <PauseSVG className='fill-primary'/> :
                     <PlaySVG />
             }
         </div>

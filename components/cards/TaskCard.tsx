@@ -48,7 +48,7 @@ const TaskCard = (props : ITaskCardProps) => {
             <div className={'flex flex-row justify-between items-center'}>
                 <div className={'flex flex-row gap-2 items-center'}>
                     <PlayButton playing={playing} onClick={togglePlaying}/>
-                    <Duration value={duration} />
+                    <Duration value={duration} playing={playing}/>
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
                     <Completed value={true} />
