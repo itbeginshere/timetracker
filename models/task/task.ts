@@ -6,6 +6,7 @@ export interface ITask {
     description : string;
     completed : boolean;
     duration : number;
+    runningOn : string;
     createdOn : string;
     updatedOn : string;
 }
