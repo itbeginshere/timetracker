@@ -1,3 +1,4 @@
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import {  useState } from 'react';
 import { auth } from '../../firebase';
 import { ILoginFormValues, IUserFormValues } from '../../models/user/user';
@@ -8,6 +9,7 @@ import ProfileSVG from '../svgs/ProfileSVG';
 const ProfileButton = () => {
     
     const [open, setOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const openDialog = () => {
         setOpen(true);
@@ -21,8 +23,36 @@ const ProfileButton = () => {
         closeDialog();
     };
 
-    const submitLogin = (values : ILoginFormValues) => {
-        closeDialog();
+    const submitSignIn = async (values : ILoginFormValues) => {
+        
+        try {
+            setIsLoading(true);
+
+            await signInWithEmailAndPassword(auth, values.email, values.password);
+            
+            closeDialog();
+        } catch (ex) {
+            alert('Not working');
+        } finally {
+            setIsLoading(false);
+        }
+
+    }
+
+    const submitRegister = async (values : ILoginFormValues) => {
+        
+        try {
+            setIsLoading(true);
+            
+            await createUserWithEmailAndPassword(auth, values.email, values.password);
+            
+            closeDialog();
+        } catch (ex) {
+            alert('Not working');
+        } finally {
+            setIsLoading(false);
+        }
+
     }
 
     const currentUser = auth.currentUser;
@@ -34,9 +64,18 @@ const ProfileButton = () => {
             </div>
             {
                 currentUser ? 
-                 <ProfileDialog open={open && !currentUser} user={currentUser} onClose={closeDialog} onSave={saveProfile} /> : 
-                 <LoginDialog open={open && !currentUser} onClose={closeDialog} onSubmit={submitLogin}/>
-
+                    <ProfileDialog 
+                        open={open && !currentUser} 
+                        user={currentUser} 
+                        onClose={closeDialog} 
+                        onSave={saveProfile} 
+                    /> : 
+                    <LoginDialog 
+                        open={open && !currentUser} 
+                        onClose={closeDialog} 
+                        onRegister={submitRegister} 
+                        onSignIn={submitSignIn}
+                    />
             }
         </>
     )
