@@ -25,7 +25,7 @@ const ProfileDialog = (props : IProfileDialogProps) => {
     }, []);
 
     return (
-        <DialogWrapper open={open}>
+        <DialogWrapper open={open} onClose={onClose}>
             <DialogHeader title={user.displayName ?? 'No-Name'}/>
             <Formik
                 initialValues={UserHelper.getFormValuesFromFirebaseUser(user)}

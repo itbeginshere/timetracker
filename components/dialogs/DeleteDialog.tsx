@@ -16,7 +16,7 @@ const DeleteDialog = (props : IDeleteDialogProps) => {
     const { onConfirm, onDecline } = props;
     
     return (
-        <DialogWrapper open={open}>
+        <DialogWrapper open={open} onClose={onDecline}>
             <DialogHeader title={'Remove Task'}/>
             <p className={'text-base md:text-lg'}>Are you sure that you want to delete the following task:</p>
             <p className={'text-base md:text-lg font-semibold'}>{'Task Name'}</p>

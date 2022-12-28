@@ -27,7 +27,7 @@ const BugDialog = (props : IBugDialogProps) => {
     }, []);
 
     return (
-       <DialogWrapper open={open}>
+       <DialogWrapper open={open} onClose={onClose}>
             <DialogHeader title={'Report an Issue'}/>
             <Formik
                 initialValues={formValues}

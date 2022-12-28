@@ -19,36 +19,64 @@ const LoginDialog = (props : ILoginDialogProps) => {
     
     const [isRegister, setIsRegister] = useState<boolean>(false);
 
+    const switchToRegisterForm = () => {
+        setIsRegister(true);
+    };
+
+    const switchToLoginForm = () => {
+        setIsRegister(false);
+    };
+
     const validationSchema = useMemo(() => {
         return UserHelper.getLoginFormValidationSchema();
     }, []);
 
     return (
-        <DialogWrapper open={open}>
-            <DialogHeader title={'Sign-In or Register'}/>
-            <Formik
-                initialValues={UserHelper.getLoginFormValues()}
-                validationSchema={validationSchema}
-                onSubmit={() => {}}
-            >
-                <Form className={'flex flex-col gap-3'}>
-                    <Textfield name={'email'} label={'Email'}/>
-                    <Textfield name={'password'} label={'Password'}/>
-                    <div className={'flex flex-row items-center justify-evenly'}>
-                    <button 
-                        className={'transition rounded-3xl py-2 px-10 border-2 border-primary hover:border-secondary bg-primary hover:bg-secondary hover:shadow-lg hover:translate-y-[-2px]'} 
+        isRegister ? (
+                <DialogWrapper open={open} onClose={onClose}>
+                    <DialogHeader title={'Register'}/>
+                    <Formik
+                        initialValues={UserHelper.getLoginFormValues()}
+                        validationSchema={validationSchema}
+                        onSubmit={onRegister}
                     >
-                        <span className={'text-white font-semibold'}>Sing-In</span>
-                    </button>
-                    <button 
-                        className={'transition rounded-3xl py-2 px-10 border-2 border-secondary hover:border-primary bg-secondary hover:bg-primary hover:shadow-lg hover:translate-y-[-2px]'} 
+                        <Form className={'flex flex-col gap-3'}>
+                            <Textfield name={'email'} label={'Email'}/>
+                            <Textfield name={'password'} label={'Password'}/>
+                            <button 
+                                className={'transition rounded-3xl py-2 px-10 border-2 border-primary hover:border-secondary bg-primary hover:bg-secondary hover:shadow-lg hover:translate-y-[-2px]'} 
+                            >
+                                <span className={'text-white font-semibold'}>Register</span>
+                            </button>
+                            <span className={'text-gray-600 text-xs self-center cursor-pointer'} onClick={switchToLoginForm}>
+                                {"Already have an account?"}
+                            </span>
+                        </Form>
+                    </Formik>
+                </DialogWrapper>
+            ) : (
+                <DialogWrapper open={open} onClose={onClose}>
+                    <DialogHeader title={'Sign-In'}/>
+                    <Formik
+                        initialValues={UserHelper.getLoginFormValues()}
+                        validationSchema={validationSchema}
+                        onSubmit={onSignIn}
                     >
-                        <span className={'text-white font-semibold'}>Register</span>
-                    </button>
-                    </div>
-                </Form>
-            </Formik>
-        </DialogWrapper>
+                        <Form className={'flex flex-col gap-3'}>
+                            <Textfield name={'email'} label={'Email'}/>
+                            <Textfield name={'password'} label={'Password'}/>
+                            <button 
+                                className={'transition rounded-3xl py-2 px-10 border-2 border-primary hover:border-secondary bg-primary hover:bg-secondary hover:shadow-lg hover:translate-y-[-2px]'} 
+                            >
+                                <span className={'text-white font-semibold'}>Sign-In</span>
+                            </button>
+                            <span className={'text-gray-600 text-xs self-center cursor-pointer'} onClick={switchToRegisterForm}>
+                                {"Don't have an account?"}
+                            </span>
+                        </Form>
+                    </Formik>
+                </DialogWrapper>
+            )
     );
 }
 
