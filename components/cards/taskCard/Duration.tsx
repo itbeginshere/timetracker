@@ -2,15 +2,15 @@ import moment from 'moment';
 
 interface IDurationProps {
     value : number;
-    playing : boolean;
+    isCounting : boolean;
 }
 
 const Duration = (props : IDurationProps) => {
 
-    const { value, playing } = props;
+    const { value, isCounting } = props;
 
     return (
-        <span className={`${playing ? 'font-bold' : 'font-medium'}`}>
+        <span className={`${isCounting ? 'font-bold' : 'font-medium'}`}>
             {('0' + Math.floor(moment.duration(value).asHours())).slice(-2)}:
             {('0' + Math.floor(moment.duration(value).asDays())).slice(-2)}:
             {('0' + Math.floor(moment.duration(value).asMinutes())).slice(-2)}:

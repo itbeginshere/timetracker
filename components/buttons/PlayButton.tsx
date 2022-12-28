@@ -2,13 +2,13 @@ import PauseSVG from '../svgs/PauseSVG';
 import PlaySVG from '../svgs/PlaySVG.';
 
 interface IPlayButton {
-    playing : boolean;
+    isCounting : boolean;
     onClick : () => void;
 }
 
 const PlayButton = (props : IPlayButton) => {
     
-    const { playing } = props;
+    const { isCounting } = props;
     const { onClick } = props;
     
     return (
@@ -18,7 +18,7 @@ const PlayButton = (props : IPlayButton) => {
             onClick={onClick}
         >
             {
-                playing ? 
+                isCounting ? 
                     <PauseSVG className='fill-primary'/> :
                     <PlaySVG />
             }

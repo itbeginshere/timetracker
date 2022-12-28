@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import DeleteButton from '../buttons/DeleteButton';
-import EditSVG from '../svgs/EditSVG';
-import UnCheckedSVG from '../svgs/UnCheckedSVG';
 import Duration from './taskCard/Duration';
 import PlayButton from '../buttons/PlayButton';
 import Completed from './taskCard/Completed';
@@ -13,17 +11,17 @@ interface ITaskCardProps {
 
 const TaskCard = (props : ITaskCardProps) => {
     
-    const [playing, setPlaying] = useState<boolean>(false);
+    const [isCounting, setIsCounting] = useState<boolean>(false);
     const [duration, setDuration] = useState<number>(0);
     
-    const togglePlaying = () => {
-        setPlaying(!playing);
+    const togglIsCounting = () => {
+        setIsCounting(!isCounting);
     };
 
     useEffect(() => {
       let interval : any = undefined;
 
-      if (!playing) {
+      if (!isCounting) {
         clearInterval(interval);
         return;
       }
@@ -34,7 +32,7 @@ const TaskCard = (props : ITaskCardProps) => {
       
       return () => clearInterval(interval);
 
-    }, [playing])
+    }, [isCounting])
 
     return (
         <div className={`bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 w-full box-border ${true ? 'border-primary' : 'border-neutral-900'} width`}>
@@ -47,8 +45,8 @@ const TaskCard = (props : ITaskCardProps) => {
             </div>
             <div className={'flex flex-row justify-between items-center'}>
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <PlayButton playing={playing} onClick={togglePlaying}/>
-                    <Duration value={duration} playing={playing}/>
+                    <PlayButton isCounting={isCounting} onClick={togglIsCounting}/>
+                    <Duration value={duration} isCounting={isCounting}/>
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
                     <Completed value={true} />
