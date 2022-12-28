@@ -45,7 +45,6 @@ const BugDialog = (props : IBugDialogProps) => {
             </Formik>
        </DialogWrapper>
     );
-
 }
 
 export default BugDialog;
