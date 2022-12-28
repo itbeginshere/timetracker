@@ -65,7 +65,7 @@ const ProfileButton = () => {
             {
                 currentUser ? 
                     <ProfileDialog 
-                        open={open && !currentUser} 
+                        open={open && !!currentUser} 
                         user={currentUser} 
                         onClose={closeDialog} 
                         onSave={saveProfile} 
