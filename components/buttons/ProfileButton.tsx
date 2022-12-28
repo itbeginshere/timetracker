@@ -1,5 +1,6 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import {  useState } from 'react';
+import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
 import { ILoginFormValues, IUserFormValues } from '../../models/user/user';
 import LoginDialog from '../dialogs/LoginDialog';
@@ -30,9 +31,10 @@ const ProfileButton = () => {
 
             await signInWithEmailAndPassword(auth, values.email, values.password);
             
+            toast.success('Successfully signed in!');
             closeDialog();
         } catch (ex) {
-            alert('Not working');
+            toast.error('Error: Something went wrong while trying to sign in.');
         } finally {
             setIsLoading(false);
         }
@@ -40,15 +42,15 @@ const ProfileButton = () => {
     }
 
     const submitRegister = async (values : ILoginFormValues) => {
-        
         try {
             setIsLoading(true);
             
             await createUserWithEmailAndPassword(auth, values.email, values.password);
             
+            toast.success('Successfully registered!');
             closeDialog();
         } catch (ex) {
-            alert('Not working');
+            toast.error('Error: Something went wrong while trying to register.');
         } finally {
             setIsLoading(false);
         }
@@ -66,12 +68,14 @@ const ProfileButton = () => {
                 currentUser ? 
                     <ProfileDialog 
                         open={open && !!currentUser} 
+                        loading={isLoading}
                         user={currentUser} 
                         onClose={closeDialog} 
                         onSave={saveProfile} 
                     /> : 
                     <LoginDialog 
                         open={open && !currentUser} 
+                        loading={isLoading}
                         onClose={closeDialog} 
                         onRegister={submitRegister} 
                         onSignIn={submitSignIn}

@@ -9,13 +9,14 @@ import DialogWrapper from './common/DialogWrapper';
 
 interface IBugDialogProps {
     open : boolean;
+    loading : boolean;
     onSave : (values : IBugFormValues) => void;
     onClose : () => void;
 }
 
 const BugDialog = (props : IBugDialogProps) => {
     
-    const { open } = props;
+    const { open, loading } = props;
     const { onSave, onClose } = props;
 
     const validationSchema = useMemo(() => {
@@ -27,7 +28,7 @@ const BugDialog = (props : IBugDialogProps) => {
     }, []);
 
     return (
-       <DialogWrapper open={open} onClose={onClose}>
+       <DialogWrapper open={open} loading={loading} onClose={onClose}>
             <DialogHeader title={'Report an Issue'}/>
             <Formik
                 initialValues={formValues}

@@ -32,6 +32,7 @@ const EditButton = (props : IEditButtonProps) => {
             </div>
             <TaskDialog 
                 open={open} 
+                loading={false}
                 onSave={saveTask}
                 onClose={closeDialog}
             />

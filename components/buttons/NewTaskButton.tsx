@@ -30,6 +30,7 @@ const NewTaskButton = () => {
             </button>
             <TaskDialog 
                 open={open}
+                loading={false}
                 onClose={closeDialog}
                 onSave={saveTask}
             />

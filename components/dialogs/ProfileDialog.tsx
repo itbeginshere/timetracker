@@ -11,13 +11,14 @@ import DialogWrapper from './common/DialogWrapper';
 interface IProfileDialogProps {
     open : boolean;
     user : User;
+    loading : boolean;
     onSave : (values : IUserFormValues) => void;
     onClose : () => void;
 }
 
 const ProfileDialog = (props : IProfileDialogProps) => {
     
-    const { open, user } = props;
+    const { open, user, loading } = props;
     const { onSave, onClose } = props;
     
     const validationSchema = useMemo(() => {
@@ -25,7 +26,7 @@ const ProfileDialog = (props : IProfileDialogProps) => {
     }, []);
 
     return (
-        <DialogWrapper open={open} onClose={onClose}>
+        <DialogWrapper open={open} loading={loading} onClose={onClose}>
             <DialogHeader title={user.displayName ?? 'No-Name'}/>
             <Formik
                 initialValues={UserHelper.getFormValuesFromFirebaseUser(user)}

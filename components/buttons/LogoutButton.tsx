@@ -1,10 +1,16 @@
 import { auth } from '../../firebase';
 import LogoutSVG from '../svgs/LogoutSVG';
+import { toast } from 'react-toastify';
 
 const LogoutButton = () => {
 
-    const logout = () => {
-        auth.signOut();
+    const logout = async () => {
+        try {
+            await auth.signOut();
+            toast.success('Successfully singed out!');
+        } catch (ex) {
+            toast.error('Error: Something went wrong when signing out.');
+        }
     };
     
     return (

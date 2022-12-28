@@ -26,6 +26,7 @@ const BugButton = () => {
             </div>
             <BugDialog 
                 open={open}
+                loading={false}
                 onSave={reportBug}
                 onClose={closeDialog}
             />

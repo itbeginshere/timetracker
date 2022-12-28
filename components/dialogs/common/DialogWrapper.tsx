@@ -2,19 +2,20 @@ import CrossSVG from '../../svgs/CrossSVG';
 
 interface IDialogWrapper {
     open : boolean;
+    loading : boolean;
     children : React.ReactNode;
     onClose : () => void;
 }
 
 const DialogWrapper = (props : IDialogWrapper) => {
     
-    const { open, children } = props;
+    const { open, loading, children } = props;
     const { onClose } = props;
     
     return (
         <>
            {
-                open && (
+                (open && !loading) && (
                     <div className={'fixed h-full w-full bg-black opacity-20 top-0 left-0'} />
                 )
            }
@@ -27,6 +28,13 @@ const DialogWrapper = (props : IDialogWrapper) => {
                 </div>
                 {children}
             </dialog>
+             {
+                (open && loading) && (
+                    <div className={'fixed h-full w-full bg-black opacity-20 top-0 left-0'}>
+
+                    </div>
+                )
+           }
         </>
          
     )

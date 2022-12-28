@@ -33,6 +33,7 @@ const DeleteButton = (props : IDeleteButtonProps) => {
             <DeleteDialog 
                 open={open}
                 task={task}
+                loading={false}
                 onConfirm={deleteTask}
                 onDecline={closeDialog}
             />

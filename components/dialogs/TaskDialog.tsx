@@ -12,13 +12,14 @@ import DialogWrapper from './common/DialogWrapper';
 interface ITaskDialogProps {
     task ?: ITask;
     open : boolean;
+    loading : boolean;
     onSave : (values : ITaskFormValues) => void;
     onClose : () => void;
 }
 
 const TaskDialog = (props : ITaskDialogProps) => {
     
-    const { open, task } = props;
+    const { open, task, loading } = props;
     const { onSave, onClose } = props;
 
     const validationSchema = useMemo(() => {
@@ -26,7 +27,7 @@ const TaskDialog = (props : ITaskDialogProps) => {
     }, []);
 
     return (
-        <DialogWrapper open={open} onClose={onClose}>
+        <DialogWrapper open={open} loading={loading} onClose={onClose}>
             <DialogHeader title={'Task Name'}/>
             <Formik
                 initialValues={TaskHelper.getFormValues(task)}

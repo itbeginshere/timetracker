@@ -7,6 +7,7 @@ import DialogWrapper from './common/DialogWrapper';
 
 interface ILoginDialogProps {
     open : boolean;
+    loading : boolean;
     onSignIn : (values : ILoginFormValues) => void;
     onRegister : (values : ILoginFormValues) => void;
     onClose : () => void;
@@ -14,7 +15,7 @@ interface ILoginDialogProps {
 
 const LoginDialog = (props : ILoginDialogProps) => {
     
-    const { open } = props;
+    const { open, loading } = props;
     const { onSignIn, onRegister, onClose } = props;
     
     const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -33,7 +34,7 @@ const LoginDialog = (props : ILoginDialogProps) => {
 
     return (
         isRegister ? (
-                <DialogWrapper open={open} onClose={onClose}>
+                <DialogWrapper open={open} loading={loading} onClose={onClose}>
                     <DialogHeader title={'Register'}/>
                     <Formik
                         initialValues={UserHelper.getLoginFormValues()}
@@ -55,7 +56,7 @@ const LoginDialog = (props : ILoginDialogProps) => {
                     </Formik>
                 </DialogWrapper>
             ) : (
-                <DialogWrapper open={open} onClose={onClose}>
+                <DialogWrapper open={open} loading={loading} onClose={onClose}>
                     <DialogHeader title={'Sign-In'}/>
                     <Formik
                         initialValues={UserHelper.getLoginFormValues()}
