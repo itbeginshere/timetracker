@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import BugButton from '../components/buttons/BugButton'
 import Appbar from '../components/system/Appbar'
 import Background from '../components/system/Background'
 import Content from '../components/system/Content'
+import Controls from '../components/system/Controls'
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <Background />
       <Appbar />
       <Content />
-      <BugButton />
+      <Controls />
     </>
   )
 }

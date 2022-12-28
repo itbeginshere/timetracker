@@ -13,7 +13,9 @@ const Content = () => {
                     <SummaryCard />
                 </div>
             </div>
-            <NewTaskButton />
+            <div className={'flex flex-row justify-end'}>
+                <NewTaskButton />
+            </div>
         </div>
     );
 }
