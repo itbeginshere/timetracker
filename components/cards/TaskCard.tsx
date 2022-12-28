@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import DeleteButton from '../buttons/DeleteButton';
 import Duration from './taskCard/Duration';
 import PlayButton from '../buttons/PlayButton';
-import Completed from './taskCard/Completed';
 import EditButton from '../buttons/EditButton';
+import CompletedButton from '../buttons/CompletedButton';
 
 interface ITaskCardProps {
     
@@ -41,17 +41,15 @@ const TaskCard = (props : ITaskCardProps) => {
                     <span className={'text-base md:text-xl font-semibold'}>{'Task name'}</span>
                     <span className={'text-sm md:text-base font-medium '}>{'Description'}</span>
                 </div>
-                <DeleteButton />
-            </div>
-            <div className={'flex flex-row justify-between items-center'}>
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <PlayButton isCounting={isCounting} onClick={togglIsCounting}/>
-                    <Duration value={duration} isCounting={isCounting}/>
-                </div>
-                <div className={'flex flex-row gap-2 items-center'}>
-                    <Completed value={true} />
+                    <CompletedButton value={false} />
                     <EditButton />
+                    <DeleteButton />
                 </div>
+            </div>
+            <div className={'flex flex-row gap-2 items-center'}>
+                <PlayButton isCounting={isCounting} onClick={togglIsCounting}/>
+                <Duration value={duration} isCounting={isCounting}/>
             </div>
         </div>
     );
