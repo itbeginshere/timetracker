@@ -25,15 +25,11 @@ const TaskDialog = (props : ITaskDialogProps) => {
         return TaskHelper.getFormValidationSchema();
     }, []);
 
-    const formValues = useMemo(() => {
-        return TaskHelper.getFormValues(task);
-    }, [task]);
-
     return (
         <DialogWrapper open={open}>
             <DialogHeader title={'Task Name'}/>
             <Formik
-                initialValues={formValues}
+                initialValues={TaskHelper.getFormValues(task)}
                 validationSchema={validationSchema}
                 onSubmit={onSave}
             >

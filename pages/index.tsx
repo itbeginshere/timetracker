@@ -15,8 +15,8 @@ export default function Home() {
       </Head>
       <Background />
       <Appbar />
-      <Content />
       <Controls />
+      <Content />
     </>
   )
 }
