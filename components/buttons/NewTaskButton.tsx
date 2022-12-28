@@ -22,7 +22,7 @@ const NewTaskButton = () => {
         <>
             <button 
                 onClick={openDialog}
-                className={'transition rounded-full bg-primary hover:bg-secondary hover:shadow-lg py-3 px-10 w-full md:w-fit'}
+                className={'transition rounded-full bg-primary hover:bg-secondary hover:shadow-lg py-3 px-10 w-full md:w-fit hover:translate-y-[-4px] '}
             >
                 <span className={'text-white font-semibold uppercase'}>
                     New Task
