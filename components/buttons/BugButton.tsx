@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { IBugFormValues } from '../../models/bug/bug';
+import BugDialog from '../dialogs/BugDialog';
 import BugSVG from '../svgs/BugSVG'
 
 const BugButton = () => {
@@ -13,16 +15,20 @@ const BugButton = () => {
         setOpen(false);
     };
 
-    const deleteTask = () => {
+    const reportBug = (values : IBugFormValues) => {
         closeDialog();
     };
     
-    
     return (
         <>
-            <div onClick={openDialog} className={'absolute left-10 bottom-4 rounded-full p-1 bg-white shadow-md'}>
-                <BugSVG width={50} height={50} className={'fill-secondary'}/>
+            <div onClick={openDialog} className={'transition group bg-white hover:bg-secondary absolute left-10 bottom-4 rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}>
+                <BugSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
             </div>
+            <BugDialog 
+                open={open}
+                onSave={reportBug}
+                onClose={closeDialog}
+            />
         </>
     )
 }
