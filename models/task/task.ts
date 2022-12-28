@@ -53,10 +53,21 @@ export class TaskHelper {
             name: Yup.string().required('Required'),
             description: Yup.string().required('Required'),
             completed: Yup.bool().required('Required'),
-            days: Yup.number().moreThan(0, 'Cannot be less than 0.').required('Required'),
-            hours: Yup.number().moreThan(0, 'Cannot be less than 0.').required('Required'),
-            minutes: Yup.number().moreThan(0, 'Cannot be less than 0.').required('Required'),
-            seconds: Yup.number().moreThan(0, 'Cannot be less than 0.').required('Required'),
+            days: Yup.number()
+                .min(0, 'Cannot be less than 0.')
+                .required('Required'),
+            hours: Yup.number()
+                .min(0, 'Cannot be less than 0.')
+                .max(23, 'Cannot be more than 23.')
+                .required('Required'),
+            minutes: Yup.number()
+                .min(0, 'Cannot be less than 0.')
+                .max(59, 'Cannot be more than 59.')
+                .required('Required'),
+            seconds: Yup.number()
+                .min(0, 'Cannot be less than 0.')
+                .max(59, 'Cannot be more than 59.')
+                .required('Required'),
         });
     }
 }
