@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AccountSVG = (props : React.SVGProps<SVGSVGElement>) => {
+const ProfileSVG = (props : React.SVGProps<SVGSVGElement>) => {
 
     const { width = 35, height = 35, fill = 'black', ...rest } = props;
 
@@ -11,4 +11,4 @@ const AccountSVG = (props : React.SVGProps<SVGSVGElement>) => {
     );
 }
 
-export default AccountSVG;
+export default ProfileSVG;
