@@ -1,13 +1,13 @@
 import NewTaskButton from '../buttons/NewTaskButton';
+import NoTasksCard from '../cards/NoTasksCard';
 import SummaryCard from '../cards/SummaryCard';
-import TaskCard from '../cards/TaskCard';
 
 const Content = () => {
     return (
         <div className={'flex flex-col w-[80%] xl:w-[60%] m-auto gap-6 py-6'}>
-            <div className={'flex flex-col md:flex-row items-center md:justify-between gap-4'}>
+            <div className={'flex flex-col md:flex-row items-center md:items-start md:justify-between gap-4'}>
                 <div className={'w-full md:max-w-[500px]'}>
-                    <TaskCard/>
+                    <NoTasksCard />
                 </div>
                 <div className={'w-full md:max-w-[500px]'}>
                     <SummaryCard />
