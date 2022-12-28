@@ -48,7 +48,7 @@ const BugDialog = (props : IBugDialogProps) => {
                             type={'submit'}
                             className={'transition rounded-3xl py-2 px-6 border-2 border-primary hover:border-secondary bg-primary hover:bg-secondary hover:shadow-lg hover:translate-y-[-2px]'} 
                         >
-                            <span className={'text-white font-semibold'}>SAVE</span>
+                            <span className={'text-white font-semibold'}>SEND</span>
                         </button>
                         <button 
                             className={'transition rounded-3xl py-2 px-6 border-2 border-gray-500 hover:shadow-lg hover:translate-y-[-2px]'} 

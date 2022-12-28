@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ITask } from '../../models/task/task';
-import EditDialog from '../dialogs/EditDialog';
+import { ITask, ITaskFormValues } from '../../models/task/task';
+import TaskDialog from '../dialogs/TaskDialog';
 import EditSVG from '../svgs/EditSVG';
 
 interface IEditButtonProps {
@@ -21,7 +21,7 @@ const EditButton = (props : IEditButtonProps) => {
         setOpen(false);
     };
 
-    const saveTask = () => {
+    const saveTask = (values : ITaskFormValues) => {
         closeDialog();
     };
 
@@ -30,7 +30,7 @@ const EditButton = (props : IEditButtonProps) => {
             <div className={'cursor-pointer p-1'} onClick={openDialog}>
                 <EditSVG />
             </div>
-            <EditDialog 
+            <TaskDialog 
                 open={open} 
                 onSave={saveTask}
                 onClose={closeDialog}

@@ -2,14 +2,14 @@ import { Formik, Form, Field } from 'formik';
 import { useMemo } from 'react';
 import { ITask, ITaskFormValues, TaskHelper } from '../../models/task/task';
 
-interface IEditDialogProps {
+interface ITaskDialogProps {
     task ?: ITask;
     open : boolean;
     onSave : (values : ITaskFormValues) => void;
     onClose : () => void;
 }
 
-const EditDialog = (props : IEditDialogProps) => {
+const TaskDialog = (props : ITaskDialogProps) => {
     
     const { open, task } = props;
     const { onSave, onClose } = props;
@@ -71,7 +71,7 @@ const EditDialog = (props : IEditDialogProps) => {
                             type={'submit'}
                             className={'transition rounded-3xl py-2 px-6 border-2 border-primary hover:border-secondary bg-primary hover:bg-secondary hover:shadow-lg hover:translate-y-[-2px]'} 
                         >
-                            <span className={'text-white font-semibold'}>SAVE</span>
+                            <span className={'text-white font-semibold'}>{task ? 'SAVE' : 'ADD'}</span>
                         </button>
                         <button 
                             className={'transition rounded-3xl py-2 px-6 border-2 border-gray-500 hover:shadow-lg hover:translate-y-[-2px]'} 
@@ -87,4 +87,4 @@ const EditDialog = (props : IEditDialogProps) => {
 
 }
 
-export default EditDialog;
+export default TaskDialog;

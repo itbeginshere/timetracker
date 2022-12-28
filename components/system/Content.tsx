@@ -1,4 +1,4 @@
-import NewTaskButton from '../buttons/NewTask';
+import NewTaskButton from '../buttons/NewTaskButton';
 import SummaryCard from '../cards/SummaryCard';
 import TaskCard from '../cards/TaskCard';
 
