@@ -12,6 +12,7 @@ export interface IUserFormValues {
 }
 
 export class UserHelper {
+
     public static getFormValuesFromFirebaseUser(user ?: User) : IUserFormValues {
         if (user) {
             return {

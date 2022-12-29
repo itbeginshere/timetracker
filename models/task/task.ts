@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getAuth } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, query, Timestamp, Unsubscribe, where } from 'firebase/firestore';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { auth, createCollection, db } from '../../firebase';
+import { app, auth, createCollection, db } from '../../firebase';
 import TaskActionHelper from '../../redux/task/action';
 
 export interface ITask {
@@ -37,12 +38,14 @@ export class TaskHelper {
         async (_, thunkApi) => {
          
             try {
-                if (!auth.currentUser) {
-                    toast.error('Error: You need to be signed in to create tasks.');
+
+                const currentUser = thunkApi.getState()?.userState?.user;
+
+                if (!currentUser) {
                     return false;
                 }
                 
-                const uid = auth.currentUser.uid;
+                const uid = currentUser.uid;
 
                 const q = query(createCollection<ITask>(this.COLLECTION_NAME_TASK), where('uid', '==', uid));
 
@@ -57,9 +60,11 @@ export class TaskHelper {
                 })
 
             } catch (ex) {
-                toast.error('Error: Coult retrieve the list of tasks.');
+                toast.error('Error: Could retrieve the list of tasks.');
+                return false;
             }
-
+            
+            return true;
     });
 
     public static async create(values : ITaskFormValues) : Promise<boolean> {

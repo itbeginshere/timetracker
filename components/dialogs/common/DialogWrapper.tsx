@@ -22,7 +22,7 @@ const DialogWrapper = (props : IDialogWrapper) => {
            }
             <dialog 
                 open={open}
-                className={'backdrop:bg-primary fixed rounded-xl top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-l-4 border-primary w-[80%] max-w-[550px]'}
+                className={'fixed rounded-xl top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-l-4 border-primary w-[80%] max-w-[550px]'}
             >
                 {children}
                 {

@@ -24,4 +24,4 @@ const createCollection = <T = DocumentData>(collectionName : string) => {
   return collection(db, collectionName) as CollectionReference<T>;
 }
 
-export { db, auth, createCollection };
+export { app, db, auth, createCollection };

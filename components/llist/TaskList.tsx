@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { auth } from '../../firebase';
 import { ITask, TaskHelper } from '../../models/task/task';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import NoTasksCard from '../cards/NoTasksCard';
@@ -7,20 +6,23 @@ import TaskCard from '../cards/TaskCard';
 
 const TaskList = () => {
 
-    const dispatch = useAppDispatch();
+    const user = useAppSelector(x => x.userState.user);
     const tasks = useAppSelector(x => x.taskState.tasks);
+
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
 
-        if (!auth.currentUser) return;
+        if (!user) return;
 
         dispatch(TaskHelper.getListThunk());
 
         return TaskHelper.severConnection();
-    }, [auth.currentUser]);
+    }, [user, dispatch])
+    
 
     return (
-        <>
+        <div className={'flex flex-col gap-4 overflow-y-auto'}>
             {
                 !tasks.length ? (
                         <NoTasksCard />
@@ -30,7 +32,7 @@ const TaskList = () => {
                         ))
                     )
             }
-        </>
+        </div>
     );
 };
 

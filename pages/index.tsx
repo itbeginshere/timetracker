@@ -1,10 +1,23 @@
 import Head from 'next/head'
+import { useEffect } from 'react'
 import Appbar from '../components/system/Appbar'
 import Background from '../components/system/Background'
 import Content from '../components/system/Content'
 import Controls from '../components/system/Controls'
+import { auth } from '../firebase'
+import { useAppDispatch } from '../redux/hooks'
+import UserActionHerlper from '../redux/user/action'
 
 export default function Home() {
+  
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authState) => {
+      dispatch(UserActionHerlper.setUser(authState));
+    });
+  }, [dispatch]);
+  
   return (
     <>
       <Head>
