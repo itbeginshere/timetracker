@@ -1,4 +1,4 @@
-import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, query, Timestamp, Unsubscribe, where } from 'firebase/firestore';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -28,6 +28,32 @@ export interface ITaskFormValues {
 export class TaskHelper {
 
     public static readonly COLLECTION_NAME_TASK = 'tasks';
+    public static unsubscribe : Unsubscribe | null = null;
+
+    public static getList() : any {
+        
+        try {
+            if (!auth.currentUser) {
+                toast.error('Error: You need to be signed in to create tasks.');
+                return false;
+            }
+            
+            const uid = auth.currentUser.uid;
+
+            const q = query(createCollection<ITask>(this.COLLECTION_NAME_TASK), where('uid', '==', uid));
+
+            this.unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const tasks : Array<ITask> = [];
+
+                querySnapshot.forEach((doc) => {
+                    tasks.push(doc.data());
+                });
+            })
+        } catch (ex) {
+            toast.error('Error: Coult retrieve the list of tasks.');
+        }
+
+    }
 
     public static async create(values : ITaskFormValues) : Promise<boolean> {
 
@@ -50,7 +76,7 @@ export class TaskHelper {
                 completed: values.completed,
                 duration: duration.asMilliseconds(),
                 uid: auth.currentUser.uid,
-                runningOn: Timestamp.fromMillis(duration.asMilliseconds()),
+                runningOn: Timestamp.fromMillis(Timestamp.now().toMillis() - duration.asMilliseconds()),
                 createdOn: Timestamp.now(),
                 updatedOn: Timestamp.now(),
             });
@@ -58,9 +84,17 @@ export class TaskHelper {
             toast.success('Successfully created the task.');
             return true;
         } catch (ex) {
-            toast.error('Error: Coult not create the task.')
+            toast.error('Error: Coult not create the task.');
             return false;
         } 
+    }
+
+    public static severConnection() {
+        
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+        
     }
 
     public static getFormValues(task ?: ITask) : ITaskFormValues {
