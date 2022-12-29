@@ -10,7 +10,7 @@ const PlayButton = (props : IPlayButton) => {
     
     const { isCounting } = props;
     const { onClick } = props;
-    
+
     return (
         <div 
             data-mdb-ripple="true"

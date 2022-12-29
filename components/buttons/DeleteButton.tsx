@@ -25,7 +25,9 @@ const DeleteButton = (props : IDeleteButtonProps) => {
     const deleteTask = async () => {
         
         setIsLoading(true);
+
         const result = await TaskHelper.delete(task.refId);
+
         setIsLoading(false);
 
         if (result) {

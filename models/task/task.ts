@@ -132,7 +132,7 @@ export class TaskHelper {
         } 
     }
 
-    public static async completed(completed : boolean, refId : string) : Promise<boolean> {
+    public static async completed(completed : boolean, refId ?: string) : Promise<boolean> {
          try {
             if (!auth.currentUser) {
                 toast.error('Error: You need to be signed in to change a task\'s status.');

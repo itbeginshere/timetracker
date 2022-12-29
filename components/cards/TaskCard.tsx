@@ -4,7 +4,7 @@ import Duration from './taskCard/Duration';
 import PlayButton from '../buttons/PlayButton';
 import EditButton from '../buttons/EditButton';
 import CompletedButton from '../buttons/CompletedButton';
-import { ITask } from '../../models/task/task';
+import { ITask, TaskHelper } from '../../models/task/task';
 import { useAppSelector } from '../../redux/hooks';
 import LoadingIndicator from '../common/LoadingIndicator';
 
@@ -18,10 +18,20 @@ const TaskCard = (props : ITaskCardProps) => {
 
     const isTaskLoading = useAppSelector(x => x.taskState.isLoading); 
 
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isCounting, setIsCounting] = useState<boolean>(false);
     const [duration, setDuration] = useState<number>(0);
     
-    const togglIsCounting = () => {
+    const togglIsCounting = async () => {
+        
+        if (isCounting) {
+            setIsLoading(true);
+
+            await TaskHelper.pause(task);
+
+            setIsLoading(false);
+        }
+        
         setIsCounting(!isCounting);
     };
 
@@ -49,7 +59,7 @@ const TaskCard = (props : ITaskCardProps) => {
                     <span className={'text-sm md:text-base font-medium '}>{task.description}</span>
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <CompletedButton value={false} />
+                    <CompletedButton task={task} />
                     <EditButton task={task} />
                     <DeleteButton task={task} />
                 </div>
@@ -59,7 +69,7 @@ const TaskCard = (props : ITaskCardProps) => {
                 <Duration value={duration} isCounting={isCounting}/>
             </div>
             {
-                isTaskLoading && (
+                (isTaskLoading || isLoading) && (
                     <LoadingIndicator />
                 )
             }
