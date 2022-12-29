@@ -1,4 +1,4 @@
-import { addDoc, deleteDoc, doc, onSnapshot, query, serverTimestamp, setDoc, Timestamp, Unsubscribe, where } from 'firebase/firestore';
+import { addDoc, deleteDoc, doc, onSnapshot, query, setDoc, Unsubscribe, where } from 'firebase/firestore';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -13,9 +13,9 @@ export interface ITask {
     completed : boolean;
     duration : number;
     uid : string;
-    runningOn : Timestamp;
-    createdOn : Timestamp;
-    updatedOn : Timestamp;
+    runningOn : number;
+    createdOn : number;
+    updatedOn : number;
 }
 
 export interface ITaskFormValues {
@@ -88,15 +88,17 @@ export class TaskHelper {
                 seconds: values.seconds,
             });
 
+            const now = moment.utc().local().valueOf();
+
             await addDoc(createCollection<ITask>(this.COLLECTION_NAME_TASK), {
                 name: values.name,
                 description: values.description,
                 completed: values.completed,
                 duration: duration.asMilliseconds(),
                 uid: auth.currentUser.uid,
-                runningOn: Timestamp.fromMillis(Timestamp.now().toMillis() - duration.asMilliseconds()),
-                createdOn: Timestamp.now(),
-                updatedOn: Timestamp.now(),
+                runningOn: now - duration.asMilliseconds(),
+                createdOn: now,
+                updatedOn: now,
             });
 
             toast.success('Successfully created the task.');
@@ -148,7 +150,7 @@ export class TaskHelper {
 
             await setDoc(docRef, {
                 completed: !completed,
-                updatedOn: Timestamp.now(),
+                updatedOn: moment.utc().local().valueOf(),
             }, { merge: true });
 
             toast.success('Successfully updated the task status.');
@@ -180,14 +182,16 @@ export class TaskHelper {
             });
 
             const docRef = doc(createCollection<Partial<ITask>>(this.COLLECTION_NAME_TASK), values.refId);
+            
+            const now = moment.utc().local().valueOf();
 
             await setDoc(docRef, {
                 name: values.name,
                 description: values.description,
                 completed: values.completed,
                 duration: duration.asMilliseconds(),
-                runningOn: Timestamp.fromMillis(Timestamp.now().toMillis() - duration.asMilliseconds()),
-                updatedOn: Timestamp.now(),
+                runningOn: now - duration.asMilliseconds(),
+                updatedOn: now,
             }, { merge: true });
 
             toast.success('Successfully updated the task.');
@@ -213,15 +217,17 @@ export class TaskHelper {
 
             const docRef = doc(createCollection<Partial<ITask>>(this.COLLECTION_NAME_TASK), task.refId);
 
-            const pausedOn = Timestamp.now();
+            const now = moment.utc().local().valueOf();
+
+            const pausedOn = now;
             const runningOn = task.runningOn;
-            const extraDuration = moment.duration({milliseconds: pausedOn.toMillis() - runningOn.toMillis()});
-            const newDuration = task.duration + extraDuration.milliseconds();
+            const extraDuration = moment.utc(pausedOn).local().diff(moment.utc(runningOn).local()).valueOf();
+            const newDuration = task.duration + extraDuration;
 
             await setDoc(docRef, {
                 duration: newDuration,
-                runningOn: pausedOn,
-                updatedOn: Timestamp.now(),
+                runningOn: now,
+                updatedOn: now,
             }, { merge: true });
 
             toast.success('Successfully saved the task duration.');
