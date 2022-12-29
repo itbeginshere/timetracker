@@ -5,6 +5,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { app, auth, createCollection, db } from '../../firebase';
+import { createAppAsyncThunk } from '../../redux/store';
 import TaskActionHelper from '../../redux/task/action';
 
 export interface ITask {
@@ -33,13 +34,13 @@ export class TaskHelper {
     private static readonly COLLECTION_NAME_TASK = 'tasks';
     private static unsubscribe : Unsubscribe | null = null;
 
-    public static getListThunk = createAsyncThunk(
+    public static getListThunk = createAppAsyncThunk(
         'tasks/getList', 
         async (_, thunkApi) => {
          
             try {
 
-                const currentUser = thunkApi.getState()?.userState?.user;
+                const currentUser = thunkApi.getState().userState.user;
 
                 if (!currentUser) {
                     return false;
