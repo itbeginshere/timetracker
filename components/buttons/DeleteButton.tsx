@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ITask } from '../../models/task/task';
+import { ITask, TaskHelper } from '../../models/task/task';
 import DeleteDialog from '../dialogs/DeleteDialog';
 import DeleteSVG from '../svgs/DeleteSVG';
 
@@ -12,6 +12,7 @@ const DeleteButton = (props : IDeleteButtonProps) => {
     const { task } = props;
 
     const [open, setOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const openDialog = () => {
         setOpen(true);
@@ -21,8 +22,16 @@ const DeleteButton = (props : IDeleteButtonProps) => {
         setOpen(false);
     };
 
-    const deleteTask = () => {
-        closeDialog();
+    const deleteTask = async () => {
+        
+        setIsLoading(true);
+        const result = await TaskHelper.delete(task.refId);
+        setIsLoading(false);
+
+        if (result) {
+            closeDialog();
+        }
+
     };
 
     return (
@@ -33,7 +42,7 @@ const DeleteButton = (props : IDeleteButtonProps) => {
             <DeleteDialog 
                 open={open}
                 task={task}
-                loading={false}
+                loading={isLoading}
                 onConfirm={deleteTask}
                 onDecline={closeDialog}
             />
