@@ -20,20 +20,11 @@ const TaskCard = (props : ITaskCardProps) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isCounting, setIsCounting] = useState<boolean>(false);
-    const [duration, setDuration] = useState<number>(0);
-    
-    const togglIsCounting = async () => {
-        
-        if (isCounting) {
-            setIsLoading(true);
+    const [duration, setDuration] = useState<number>(task.duration);
 
-            await TaskHelper.pause(task);
-
-            setIsLoading(false);
-        }
-        
-        setIsCounting(!isCounting);
-    };
+    useEffect(() => {
+        setDuration(task.duration);
+    }, [task]);
 
     useEffect(() => {
       let interval : any = undefined;
@@ -49,7 +40,20 @@ const TaskCard = (props : ITaskCardProps) => {
       
       return () => clearInterval(interval);
 
-    }, [isCounting])
+    }, [isCounting]);
+
+    const togglIsCounting = async () => {
+        
+        if (isCounting) {
+            setIsLoading(true);
+
+            await TaskHelper.pause(task);
+
+            setIsLoading(false);
+        }
+        
+        setIsCounting(!isCounting);
+    };
 
     return (
         <div className={`relative bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 w-full box-border ${isCounting ? 'border-primary' : 'border-neutral-900'}`}>

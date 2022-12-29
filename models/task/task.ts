@@ -215,8 +215,8 @@ export class TaskHelper {
 
             const pausedOn = Timestamp.now();
             const runningOn = task.runningOn;
-            const extraDuration = moment.duration(pausedOn.toMillis() - runningOn.toMillis());
-            const newDuration = task.duration + extraDuration.asMilliseconds();
+            const extraDuration = moment.duration({milliseconds: pausedOn.toMillis() - runningOn.toMillis()});
+            const newDuration = task.duration + extraDuration.milliseconds();
 
             await setDoc(docRef, {
                 duration: newDuration,
@@ -247,17 +247,19 @@ export class TaskHelper {
             const momnetDuration = moment.duration(task.duration);
 
             return {
+                refId: task.refId,
                 name: task.name,
                 description: task.description,
                 completed: task.completed,
-                days: Math.floor(momnetDuration.asDays()),
-                hours: Math.floor(momnetDuration.asHours()),
-                minutes: Math.floor(momnetDuration.asMinutes()),
-                seconds: Math.floor(momnetDuration.asSeconds()),
+                days: Math.floor(momnetDuration.days()),
+                hours: Math.floor(momnetDuration.hours()),
+                minutes: Math.floor(momnetDuration.minutes()),
+                seconds: Math.floor(momnetDuration.seconds()),
             };
         }
 
         return {
+            refId: '',
             name: '',
             description: '',
             completed: false,
