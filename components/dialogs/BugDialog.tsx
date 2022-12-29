@@ -8,7 +8,6 @@ import DialogHeader from './common/DialogHeader';
 import DialogWrapper from './common/DialogWrapper';
 
 interface IBugDialogProps {
-    open : boolean;
     loading : boolean;
     onSave : (values : IBugFormValues) => void;
     onClose : () => void;
@@ -16,7 +15,7 @@ interface IBugDialogProps {
 
 const BugDialog = (props : IBugDialogProps) => {
     
-    const { open, loading } = props;
+    const { loading } = props;
     const { onSave, onClose } = props;
 
     const validationSchema = useMemo(() => {
@@ -28,7 +27,7 @@ const BugDialog = (props : IBugDialogProps) => {
     }, []);
 
     return (
-       <DialogWrapper open={open} loading={loading} onClose={onClose}>
+       <DialogWrapper open={true} loading={loading} onClose={onClose}>
             <DialogHeader title={'Report an Issue'}/>
             <Formik
                 initialValues={formValues}

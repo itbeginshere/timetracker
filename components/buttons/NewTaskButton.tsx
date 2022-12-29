@@ -38,12 +38,15 @@ const NewTaskButton = () => {
                     New Task
                 </span>
             </button>
-            <TaskDialog 
-                open={open}
-                loading={isLoading}
-                onClose={closeDialog}
-                onSave={saveTask}
-            />
+            {
+                open && (
+                    <TaskDialog 
+                        loading={isLoading}
+                        onClose={closeDialog}
+                        onSave={saveTask}
+                    />
+                )
+            }
         </>
     )
 }

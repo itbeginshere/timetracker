@@ -5,7 +5,6 @@ import DialogWrapper from './common/DialogWrapper';
 
 interface IDeleteDialogProps {
     task : ITask;
-    open : boolean;
     loading : boolean;
     onConfirm : () => void;
     onDecline : () => void;
@@ -13,11 +12,11 @@ interface IDeleteDialogProps {
 
 const DeleteDialog = (props : IDeleteDialogProps) => {
     
-    const { open, task, loading } = props;
+    const { task, loading } = props;
     const { onConfirm, onDecline } = props;
     
     return (
-        <DialogWrapper open={open} loading={loading} onClose={onDecline}>
+        <DialogWrapper open={true} loading={loading} onClose={onDecline}>
             <DialogHeader title={'Remove Task'}/>
             <p className={'text-base md:text-lg'}>Are you sure that you want to delete the following task:</p>
             <p className={'text-base md:text-lg font-semibold'}>{task.name}</p>

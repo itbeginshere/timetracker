@@ -24,12 +24,15 @@ const BugButton = () => {
             <div onClick={openDialog} className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}>
                 <BugSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
             </div>
-            <BugDialog 
-                open={open}
-                loading={false}
-                onSave={reportBug}
-                onClose={closeDialog}
-            />
+            {
+                open && (
+                    <BugDialog 
+                        loading={false}
+                        onSave={reportBug}
+                        onClose={closeDialog}
+                    />
+                )
+            }
         </>
     )
 }

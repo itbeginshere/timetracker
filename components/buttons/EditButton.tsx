@@ -41,13 +41,16 @@ const EditButton = (props : IEditButtonProps) => {
             <div className={'cursor-pointer p-1'} onClick={openDialog}>
                 <EditSVG />
             </div>
-            <TaskDialog 
-                open={open} 
-                loading={isLoading}
-                task={task}
-                onSave={saveTask}
-                onClose={closeDialog}
-            />
+            {
+                open && (
+                    <TaskDialog 
+                        loading={isLoading}
+                        task={task}
+                        onSave={saveTask}
+                        onClose={closeDialog}
+                    />
+                )
+            }
         </>
     );
 }

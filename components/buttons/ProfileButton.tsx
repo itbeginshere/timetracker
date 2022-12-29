@@ -87,21 +87,24 @@ const ProfileButton = () => {
                 <ProfileSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
             </div>
             {
-                currentUser ? 
+                (open && !!currentUser) && (
                     <ProfileDialog 
-                        open={open && !!currentUser} 
                         loading={profileIsLoading}
                         user={currentUser} 
                         onClose={closeDialog} 
                         onSave={saveProfile} 
-                    /> : 
+                    /> 
+                ) 
+            }
+            {
+                (open && !currentUser) && (
                     <LoginDialog 
-                        open={open && !currentUser} 
                         loading={loginIsLoading}
                         onClose={closeDialog} 
                         onRegister={submitRegister} 
                         onSignIn={submitSignIn}
                     />
+                ) 
             }
         </>
     )

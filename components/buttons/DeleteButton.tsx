@@ -41,13 +41,16 @@ const DeleteButton = (props : IDeleteButtonProps) => {
             <div className={'cursor-pointer p-1'} onClick={openDialog}>
                 <DeleteSVG/>
             </div>
-            <DeleteDialog 
-                open={open}
-                task={task}
-                loading={isLoading}
-                onConfirm={deleteTask}
-                onDecline={closeDialog}
-            />
+            {
+                open && (
+                     <DeleteDialog 
+                        task={task}
+                        loading={isLoading}
+                        onConfirm={deleteTask}
+                        onDecline={closeDialog}
+                    />
+                )
+            }
         </>
     )
 };
