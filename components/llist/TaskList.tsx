@@ -8,6 +8,7 @@ const TaskList = () => {
 
     const user = useAppSelector(x => x.userState.user);
     const tasks = useAppSelector(x => x.taskState.tasks);
+    const isTaskLoading = useAppSelector(x => x.taskState.isLoading);
 
     const dispatch = useAppDispatch();
 
@@ -15,14 +16,15 @@ const TaskList = () => {
 
         if (!user) return;
 
-        dispatch(TaskHelper.getListThunk());
+        dispatch(TaskHelper.getListThunk())
 
-        return TaskHelper.severConnection();
+        return () => TaskHelper.severConnection();
+
     }, [user, dispatch])
     
 
     return (
-        <div className={'flex flex-col gap-4 overflow-y-auto'}>
+        <div className={'flex flex-col gap-4 overflow-y-auto relative'}>
             {
                 !tasks.length ? (
                         <NoTasksCard />

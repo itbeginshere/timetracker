@@ -1,5 +1,5 @@
+import LoadingIndicator from '../../common/LoadingIndicator';
 import CrossSVG from '../../svgs/CrossSVG';
-import LoadingSVG from '../../svgs/LoadingSVG';
 
 interface IDialogWrapper {
     open : boolean;
@@ -27,12 +27,7 @@ const DialogWrapper = (props : IDialogWrapper) => {
                 {children}
                 {
                     loading && (
-                      <>
-                        <div className={'fixed h-full w-full top-0 left-0 bg-white opacity-60 rounded-xl '}></div>
-                        <div className={'fixed h-full w-full top-0 left-0 flex flex-row justify-center items-center'}>
-                            <LoadingSVG className={'animate-spin fill-white'} stroke={'#01B7F0'}/>
-                        </div>
-                      </>
+                      <LoadingIndicator />
                     )
                 }
                 <div className={`absolute -right-3 -top-3 p-2 bg-gray-800 rounded-full ${loading ? '' : 'cursor-pointer'}`} onClick={loading ? undefined : onClose}>

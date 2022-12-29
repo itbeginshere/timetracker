@@ -2,7 +2,7 @@ import { addDoc, onSnapshot, query, Timestamp, Unsubscribe, where } from 'fireba
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { auth, createCollection, db } from '../../firebase';
+import { auth, createCollection } from '../../firebase';
 import { createAppAsyncThunk } from '../../redux/store';
 import TaskActionHelper from '../../redux/task/action';
 
@@ -29,7 +29,7 @@ export interface ITaskFormValues {
 
 export class TaskHelper {
 
-    private static readonly COLLECTION_NAME_TASK = 'tasks';
+    public static readonly COLLECTION_NAME_TASK = 'tasks';
     private static unsubscribe : Unsubscribe | null = null;
 
     public static getListThunk = createAppAsyncThunk(
@@ -49,6 +49,9 @@ export class TaskHelper {
                 const q = query(createCollection<ITask>(this.COLLECTION_NAME_TASK), where('uid', '==', uid));
 
                 this.unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    
+                    thunkApi.dispatch(TaskActionHelper.setIsLoading(true));
+                    
                     const tasks : Array<ITask> = [];
 
                     querySnapshot.forEach((doc) => {
@@ -56,6 +59,8 @@ export class TaskHelper {
                     });
 
                     thunkApi.dispatch(TaskActionHelper.setList(tasks));
+
+                    thunkApi.dispatch(TaskActionHelper.setIsLoading(false));
                 })
 
             } catch (ex) {
