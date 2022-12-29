@@ -6,12 +6,29 @@ export interface ILoginFormValues {
     password : string;
 }
 
+export interface IUser {
+    uid : string;
+    email : string; 
+    displayName : string;
+}
+
 export interface IUserFormValues {
     email : string; 
     displayName : string;
 }
 
 export class UserHelper {
+
+    public static convertFirebaseAuthToUser(user : User | null) : IUser | null {
+        
+        if (!user) return null;
+
+        return {
+            displayName: user.displayName ?? '',
+            email: user.email ?? '',
+            uid: user.uid ?? '',
+        };   
+    }
 
     public static getFormValuesFromFirebaseUser(user ?: User) : IUserFormValues {
         if (user) {

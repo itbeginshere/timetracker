@@ -1,10 +1,8 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAuth } from 'firebase/auth';
-import { addDoc, collection, onSnapshot, query, Timestamp, Unsubscribe, where } from 'firebase/firestore';
+import { addDoc, onSnapshot, query, Timestamp, Unsubscribe, where } from 'firebase/firestore';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { app, auth, createCollection, db } from '../../firebase';
+import { auth, createCollection, db } from '../../firebase';
 import { createAppAsyncThunk } from '../../redux/store';
 import TaskActionHelper from '../../redux/task/action';
 
