@@ -14,11 +14,7 @@ const state : IUserState = {
 
 const userReducer = createReducer(state, builder => 
     builder.addCase(UserActionHerlper.setUser, (state, action) => {
-        state.user = {
-            displayName: action.payload?.displayName ?? '',
-            email: action.payload?.email ?? '',
-            uid: action.payload?.uid ?? '',
-        };
+        state.user = action.payload;
     }).addCase(UserActionHerlper.setIsLoading, (state, action) => {
         state.isLoading = action.payload;
     })

@@ -6,8 +6,6 @@ const NoTasksCard = () => {
     const user = useAppSelector(x => x.userState.user);
     const isUserLoading = useAppSelector(x => x.userState.isLoading);
 
-    console.log(isUserLoading);
-
     return (
         <div className={'flex flex-col items-center justify-center bg-white shadow-lg rounded-2xl py-3 px-5 border-b-4 border-secondary w-full h-44'}>
             {
