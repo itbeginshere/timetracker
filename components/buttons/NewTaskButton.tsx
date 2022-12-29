@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { ITaskFormValues } from '../../models/task/task';
+import { ITaskFormValues, TaskHelper } from '../../models/task/task';
 import TaskDialog from '../dialogs/TaskDialog';
 
 const NewTaskButton = () => {
    
     const [open, setOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const openDialog = () => {
         setOpen(true);
@@ -14,8 +15,17 @@ const NewTaskButton = () => {
         setOpen(false);
     };
 
-    const saveTask = (values : ITaskFormValues) => {
-        closeDialog();
+    const saveTask = async (values : ITaskFormValues) => {
+        
+        setIsLoading(true);
+
+        const result = await TaskHelper.create(values);
+
+        setIsLoading(false);
+        
+        if (result) {
+            closeDialog();
+        }
     };
    
     return (
@@ -30,7 +40,7 @@ const NewTaskButton = () => {
             </button>
             <TaskDialog 
                 open={open}
-                loading={false}
+                loading={isLoading}
                 onClose={closeDialog}
                 onSave={saveTask}
             />

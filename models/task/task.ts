@@ -1,14 +1,18 @@
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { auth, createCollection, db } from '../../firebase';
 
 export interface ITask {
     name : string;
     description : string;
     completed : boolean;
     duration : number;
+    uid : string;
     runningOn : string;
-    createdOn : string;
-    updatedOn : string;
+    createdOn : Timestamp;
+    updatedOn : Timestamp;
 }
 
 export interface ITaskFormValues {
@@ -22,6 +26,43 @@ export interface ITaskFormValues {
 }
 
 export class TaskHelper {
+
+    public static readonly COLLECTION_NAME_TASK = 'tasks';
+
+    public static async create(values : ITaskFormValues) : Promise<boolean> {
+
+        try {
+            if (!auth.currentUser) {
+                toast.error('Error: You need to be signed in to create tasks.');
+                return false;
+            }
+
+            const duration = moment.duration({
+                days: values.days,
+                hours: values.hours,
+                minutes: values.minutes, 
+                seconds: values.seconds,
+            });
+
+            await addDoc(createCollection<ITask>(this.COLLECTION_NAME_TASK), {
+                name: values.name,
+                description: values.description,
+                completed: values.completed,
+                duration: duration.asMilliseconds(),
+                uid: auth.currentUser.uid,
+                runningOn: Timestamp.fromMillis(duration.asMilliseconds()),
+                createdOn: Timestamp.now(),
+                updatedOn: Timestamp.now(),
+            });
+
+            toast.success('Successfully created the task.');
+            return true;
+        } catch (ex) {
+            toast.error('Error: Coult not create the task.')
+            return false;
+        } 
+    }
+
     public static getFormValues(task ?: ITask) : ITaskFormValues {
         if (task) {
 

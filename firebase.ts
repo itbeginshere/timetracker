@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { collection, CollectionReference, DocumentData, getFirestore } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
@@ -20,4 +20,8 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 
-export { db, auth };
+const createCollection = <T = DocumentData>(collectionName : string) => {
+  return collection(db, collectionName) as CollectionReference<T>;
+}
+
+export { db, auth, createCollection };
