@@ -1,8 +1,10 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { addDoc, collection, onSnapshot, query, Timestamp, Unsubscribe, where } from 'firebase/firestore';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { auth, createCollection, db } from '../../firebase';
+import TaskActionHelper from '../../redux/task/action';
 
 export interface ITask {
     name : string;
@@ -27,33 +29,38 @@ export interface ITaskFormValues {
 
 export class TaskHelper {
 
-    public static readonly COLLECTION_NAME_TASK = 'tasks';
-    public static unsubscribe : Unsubscribe | null = null;
+    private static readonly COLLECTION_NAME_TASK = 'tasks';
+    private static unsubscribe : Unsubscribe | null = null;
 
-    public static getList() : any {
-        
-        try {
-            if (!auth.currentUser) {
-                toast.error('Error: You need to be signed in to create tasks.');
-                return false;
+    public static getListThunk = createAsyncThunk(
+        'tasks/getList', 
+        async (_, thunkApi) => {
+         
+            try {
+                if (!auth.currentUser) {
+                    toast.error('Error: You need to be signed in to create tasks.');
+                    return false;
+                }
+                
+                const uid = auth.currentUser.uid;
+
+                const q = query(createCollection<ITask>(this.COLLECTION_NAME_TASK), where('uid', '==', uid));
+
+                this.unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    const tasks : Array<ITask> = [];
+
+                    querySnapshot.forEach((doc) => {
+                        tasks.push(doc.data());
+                    });
+
+                    thunkApi.dispatch(TaskActionHelper.setList(tasks));
+                })
+
+            } catch (ex) {
+                toast.error('Error: Coult retrieve the list of tasks.');
             }
-            
-            const uid = auth.currentUser.uid;
 
-            const q = query(createCollection<ITask>(this.COLLECTION_NAME_TASK), where('uid', '==', uid));
-
-            this.unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const tasks : Array<ITask> = [];
-
-                querySnapshot.forEach((doc) => {
-                    tasks.push(doc.data());
-                });
-            })
-        } catch (ex) {
-            toast.error('Error: Coult retrieve the list of tasks.');
-        }
-
-    }
+    });
 
     public static async create(values : ITaskFormValues) : Promise<boolean> {
 

@@ -4,7 +4,7 @@ import TaskDialog from '../dialogs/TaskDialog';
 import EditSVG from '../svgs/EditSVG';
 
 interface IEditButtonProps {
-    task ?: ITask;
+    task : ITask;
 }
 
 const EditButton = (props : IEditButtonProps) => {
@@ -33,6 +33,7 @@ const EditButton = (props : IEditButtonProps) => {
             <TaskDialog 
                 open={open} 
                 loading={false}
+                task={task}
                 onSave={saveTask}
                 onClose={closeDialog}
             />

@@ -4,7 +4,7 @@ import DeleteDialog from '../dialogs/DeleteDialog';
 import DeleteSVG from '../svgs/DeleteSVG';
 
 interface IDeleteButtonProps {
-    task ?: ITask;
+    task : ITask;
 }
 
 const DeleteButton = (props : IDeleteButtonProps) => {
