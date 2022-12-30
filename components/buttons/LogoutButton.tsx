@@ -1,12 +1,17 @@
 import { auth } from '../../firebase';
 import LogoutSVG from '../svgs/LogoutSVG';
 import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../redux/hooks';
+import TaskActionHelper from '../../redux/task/action';
 
 const LogoutButton = () => {
+
+    const dispatch = useAppDispatch();
 
     const logout = async () => {
         try {
             await auth.signOut();
+            dispatch(TaskActionHelper.setList([]));
             toast.success('Successfully singed out!');
         } catch (ex) {
             toast.error('Error: Something went wrong when signing out.');

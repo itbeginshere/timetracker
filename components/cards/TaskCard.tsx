@@ -57,6 +57,18 @@ const TaskCard = (props : ITaskCardProps) => {
         setIsCounting(!isCounting);
     };
 
+        
+    const toggleCompleted = async () => {
+        
+        setIsLoading(true);
+
+        await TaskHelper.completed(task.completed, task.refId);
+
+        setIsLoading(false);
+        
+    }
+
+
     return (
         <div className={`relative bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 w-full box-border ${isCounting ? 'border-primary' : 'border-neutral-900'}`}>
             <div className={'flex flex-row justify-between pb-7'}>
@@ -65,7 +77,7 @@ const TaskCard = (props : ITaskCardProps) => {
                     <span className={'text-sm md:text-base font-medium '}>{task.description}</span>
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <CompletedButton task={task} />
+                    <CompletedButton task={task} onClick={toggleCompleted}/>
                     <EditButton task={task} disabled={task.completed}/>
                     <DeleteButton task={task} disabled={task.completed} />
                 </div>
