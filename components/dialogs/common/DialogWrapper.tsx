@@ -17,12 +17,12 @@ const DialogWrapper = (props : IDialogWrapper) => {
         <>
            {
                 open && (
-                    <div className={'fixed h-full w-full bg-black opacity-20 top-0 left-0'} />
+                    <div className={'fixed h-full w-full bg-black opacity-20 top-0 left-0 z-10'} />
                 )
            }
             <dialog 
                 open={open}
-                className={'fixed rounded-xl top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-l-4 border-primary w-[80%] max-w-[550px]'}
+                className={'fixed rounded-xl top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-l-4 border-primary w-[80%] max-w-[550px] z-20'}
             >
                 {children}
                 {
