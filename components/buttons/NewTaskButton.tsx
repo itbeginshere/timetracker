@@ -34,7 +34,7 @@ const NewTaskButton = () => {
                 onClick={openDialog}
                 className={'transition rounded-full bg-primary hover:bg-secondary hover:shadow-lg py-3 px-9 w-full md:w-fit hover:translate-y-[-4px] '}
             >
-                <span className={'text-white font-semibold uppercase'}>
+                <span className={'text-white font-semibold uppercase whitespace-nowrap	'}>
                     New Task
                 </span>
             </button>

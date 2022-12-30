@@ -13,7 +13,7 @@ const Spinner = (props : ISpinnerProps) => {
 
     return (
         <div className={'flex flex-col'}>
-            <div className={'flex flex-row gap-3'}>
+            <div className={'flex flex-col sm:flex-row gap-3'}>
                 <label htmlFor={name} className={`w-[120px] font-semibold ${meta.error && meta.touched ? 'text-red-600' : ''}`}>{label}</label>
                 <Field id={name} name={name} placeholder={label} type={'number'} className={`flex-1 ${meta.error && meta.touched ? 'border-2 border-red-600' : ''}`}/>
             </div>

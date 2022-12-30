@@ -38,7 +38,7 @@ const ElapsedTime = (props : IElapsedTimeProps) => {
     }, [duration]);
     
     return (
-        <span className={'text-lg font-semibold text-secondary'}>{time}</span>
+        <span className={'text-center md:text-left text-lg font-semibold text-secondary'}>{time}</span>
     );
 }
 
