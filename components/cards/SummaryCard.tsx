@@ -31,11 +31,11 @@ const SummaryCard = () => {
         
         if (completedCount <= 0 || tasks.length <= 0) return 0;
         
-        return (completedCount / tasks.length) * 100;
+        return Math.round((completedCount / tasks.length) * 100);
     },[completedCount, tasks]);
 
     return (
-        <div className={'flex flex-col gap-3 bg-white shadow-lg rounded-2xl py-3 px-5 border-b-4 border-secondary w-full'}>
+        <div className={'flex flex-col md:flex-1 gap-3 bg-white shadow-lg rounded-2xl py-3 px-5 border-b-4 border-secondary w-full md:max-w-[500px]'}>
             <div className={'flex flex-row gap-3'}>
                 <span className={'text-lg font-semibold min-w-[140px]'}>Logged Time</span>
                 <ElapsedTime duration={savedTime} />

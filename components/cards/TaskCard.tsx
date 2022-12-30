@@ -70,7 +70,7 @@ const TaskCard = (props : ITaskCardProps) => {
 
 
     return (
-        <div className={`relative bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 w-full box-border ${isCounting ? 'border-primary' : 'border-neutral-900'}`}>
+        <div className={`relative bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 flex flex-col flex-1 w-full box-border ${isCounting ? 'border-primary' : 'border-neutral-900'}`}>
             <div className={'flex flex-row justify-between pb-7'}>
                 <div className={'flex flex-col'}>
                     <span className={'text-base md:text-xl font-semibold'}>{task.name}</span>

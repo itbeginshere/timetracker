@@ -29,10 +29,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Background />
-      <Appbar />
-      <Controls />
-      <Content />
+      <div className={'flex flex-col w-[80%] xl:w-[60%] m-auto flex-1 overflow-auto box-border'}>
+        <Background />
+        <Appbar />
+        <Content />
+        <Controls />
+      </div>
     </>
   )
 }

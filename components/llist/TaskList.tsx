@@ -3,6 +3,7 @@ import { ITask, TaskHelper } from '../../models/task/task';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import NoTasksCard from '../cards/NoTasksCard';
 import TaskCard from '../cards/TaskCard';
+import LoadingIndicator from '../common/LoadingIndicator';
 
 const TaskList = () => {
 
@@ -21,10 +22,9 @@ const TaskList = () => {
         return () => TaskHelper.severConnection();
 
     }, [user, dispatch])
-    
 
     return (
-        <div className={'flex flex-col gap-4 overflow-y-auto relative'}>
+        <div className={'flex flex-col flex-1 items-stretch gap-4 overflow-y-auto relative h-full w-full md:max-w-[500px]'}>
             {
                 !tasks.length ? (
                         <NoTasksCard />
@@ -33,6 +33,11 @@ const TaskList = () => {
                             <TaskCard key={index} task={task} />
                         ))
                     )
+            }
+            {
+                isTaskLoading && (
+                    <LoadingIndicator />
+                )
             }
         </div>
     );
