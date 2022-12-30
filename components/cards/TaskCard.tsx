@@ -43,14 +43,16 @@ const TaskCard = (props : ITaskCardProps) => {
     }, [isCounting]);
 
     const togglIsCounting = async () => {
-        
+    
+        setIsLoading(true);
+
         if (isCounting) {
-            setIsLoading(true);
-
             await TaskHelper.pause(task);
-
-            setIsLoading(false);
+        } else {
+            await TaskHelper.play(task);
         }
+
+        setIsLoading(false);
         
         setIsCounting(!isCounting);
     };

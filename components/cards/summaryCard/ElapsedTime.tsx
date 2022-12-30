@@ -29,6 +29,10 @@ const ElapsedTime = (props : IElapsedTimeProps) => {
             result += `${duration.seconds()} Second${duration.seconds() > 1 ? 's' : ''} `;
         }
 
+        if (result === '') {
+            result = 'No completed tasks.';
+        }
+
         return result;
 
     }, [duration]);

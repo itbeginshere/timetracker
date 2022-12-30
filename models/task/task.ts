@@ -206,7 +206,7 @@ export class TaskHelper {
       public static async pause(task : ITask) : Promise<boolean> {
          try {
             if (!auth.currentUser) {
-                toast.error('Error: You need to be signed in to save a task\'s duration.');
+                toast.error('Error: You need to be signed in to pause a task\'s duration.');
                 return false;
             }
 
@@ -230,11 +230,37 @@ export class TaskHelper {
                 updatedOn: now,
             }, { merge: true });
 
-            toast.success('Successfully saved the task duration.');
+            return true;
+        } catch (ex) {
+            toast.error('Error: Could not pause the task durationk.');
+            return false;
+        } 
+    }
+
+    public static async play(task : ITask) : Promise<boolean> {
+         try {
+            if (!auth.currentUser) {
+                toast.error('Error: You need to be signed in to play a task\'s duration.');
+                return false;
+            }
+
+            if (!task.refId) {
+                toast.error('Error: Could not find that task.');
+                return false;
+            }
+
+            const docRef = doc(createCollection<Partial<ITask>>(this.COLLECTION_NAME_TASK), task.refId);
+
+            const now = moment.utc().local().valueOf();
+
+            await setDoc(docRef, {
+                runningOn: now,
+                updatedOn: now,
+            }, { merge: true });
 
             return true;
         } catch (ex) {
-            toast.error('Error: Could not save the task durationk.');
+            toast.error('Error: Could not play the task durationk.');
             return false;
         } 
     }
