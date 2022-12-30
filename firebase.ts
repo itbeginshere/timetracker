@@ -5,12 +5,12 @@ import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC3EvWG_5hqVCo5xvKHRJWm9H7ETWURtKw",
-  authDomain: "timetracker-5733d.firebaseapp.com",
-  projectId: "timetracker-5733d",
-  storageBucket: "timetracker-5733d.appspot.com",
-  messagingSenderId: "68863297146",
-  appId: "1:68863297146:web:271af987a1744b84291dc3"
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
