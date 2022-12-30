@@ -5,11 +5,12 @@ import DeleteSVG from '../svgs/DeleteSVG';
 
 interface IDeleteButtonProps {
     task : ITask;
+    disabled : boolean;
 }
 
 const DeleteButton = (props : IDeleteButtonProps) => {
     
-    const { task } = props;
+    const { task, disabled } = props;
 
     const [open, setOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,9 +39,13 @@ const DeleteButton = (props : IDeleteButtonProps) => {
 
     return (
         <>
-            <div className={'cursor-pointer p-1'} onClick={openDialog}>
-                <DeleteSVG/>
-            </div>
+            <button 
+                className={'p-1 rounded-xl'} 
+                disabled={disabled}
+                onClick={openDialog}
+            >
+                <DeleteSVG className={disabled ? 'opacity-50' : ''}/>
+            </button>
             {
                 open && (
                      <DeleteDialog 

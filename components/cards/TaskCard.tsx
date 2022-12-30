@@ -66,12 +66,12 @@ const TaskCard = (props : ITaskCardProps) => {
                 </div>
                 <div className={'flex flex-row gap-2 items-center'}>
                     <CompletedButton task={task} />
-                    <EditButton task={task} />
-                    <DeleteButton task={task} />
+                    <EditButton task={task} disabled={task.completed}/>
+                    <DeleteButton task={task} disabled={task.completed} />
                 </div>
             </div>
             <div className={'flex flex-row gap-2 items-center'}>
-                <PlayButton isCounting={isCounting} onClick={togglIsCounting}/>
+                <PlayButton disabled={task.completed} isCounting={isCounting} onClick={togglIsCounting}/>
                 <Duration value={duration} isCounting={isCounting}/>
             </div>
             {

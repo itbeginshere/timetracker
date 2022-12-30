@@ -5,11 +5,12 @@ import EditSVG from '../svgs/EditSVG';
 
 interface IEditButtonProps {
     task : ITask;
+    disabled : boolean;
 }
 
 const EditButton = (props : IEditButtonProps) => {
 
-    const { task } = props;
+    const { task, disabled } = props;
 
     const [open, setOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,9 +39,13 @@ const EditButton = (props : IEditButtonProps) => {
 
     return (
         <>
-            <div className={'cursor-pointer p-1'} onClick={openDialog}>
-                <EditSVG />
-            </div>
+            <button 
+                className={'p-1 rounded-full'} 
+                onClick={openDialog} 
+                disabled={disabled}
+            >
+                <EditSVG className={disabled ? 'opacity-50' : ''}/>
+            </button>
             {
                 open && (
                     <TaskDialog 

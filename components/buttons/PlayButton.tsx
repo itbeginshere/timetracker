@@ -2,27 +2,28 @@ import PauseSVG from '../svgs/PauseSVG';
 import PlaySVG from '../svgs/PlaySVG.';
 
 interface IPlayButton {
+    disabled : boolean;
     isCounting : boolean;
     onClick : () => void;
 }
 
 const PlayButton = (props : IPlayButton) => {
     
-    const { isCounting } = props;
+    const { isCounting, disabled } = props;
     const { onClick } = props;
 
     return (
-        <div 
-            data-mdb-ripple="true"
-            className={'cursor-pointer rounded-full p-1'}
+        <button 
+            className={'rounded-full p-1'}
+            disabled={disabled}
             onClick={onClick}
         >
             {
                 isCounting ? 
-                    <PauseSVG className='fill-primary'/> :
-                    <PlaySVG />
+                    <PauseSVG className={`fill-primary ${disabled ? 'opacity-50' : ''}`}/> :
+                    <PlaySVG className={disabled ? 'opacity-50' : ''}/>
             }
-        </div>
+        </button>
     );
 }
 
