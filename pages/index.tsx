@@ -16,6 +16,7 @@ export default function Home() {
   useEffect(() => {
     auth.onAuthStateChanged(async (authState) => {
       dispatch(UserActionHerlper.setIsLoading(true));
+      console.log(authState);
       await dispatch(UserActionHerlper.setUser(UserHelper.convertFirebaseAuthToUser(authState)));
       dispatch(UserActionHerlper.setIsLoading(false));
     });

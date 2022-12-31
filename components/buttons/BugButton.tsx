@@ -4,9 +4,12 @@ import BugDialog from '../dialogs/BugDialog';
 import BugSVG from '../svgs/BugSVG'
 import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
+import { useAppSelector } from '../../redux/hooks';
 
 const BugButton = () => {
     
+    const user = useAppSelector(x => x.userState.user);
+
     const [open, setOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -20,15 +23,21 @@ const BugButton = () => {
 
     const reportBug = async (values : IBugFormValues) => {
        
+        if (!user) {
+            toast.error('You must be signed in to log an issue.');
+            return;
+        }
+
         try {
             setIsLoading(true);
         
             emailjs.init(process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY ?? '');
 
             const res = await emailjs.send(process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID ?? '', process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID ?? '', {
-                from_name: values.subject,
+                from_name: values.issue,
                 to_name: "Matthew",
-                message: values.message,
+                message: values.description,
+                reply_to: user.email,
             });
 
             if (res.status === 200) {
@@ -45,7 +54,10 @@ const BugButton = () => {
     
     return (
         <>
-            <div onClick={openDialog} className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}>
+            <div 
+                className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}
+                onClick={openDialog} 
+            >
                 <BugSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
             </div>
             {

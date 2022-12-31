@@ -1,14 +1,21 @@
 import { auth } from '../../firebase';
 import LogoutSVG from '../svgs/LogoutSVG';
 import { toast } from 'react-toastify';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import TaskActionHelper from '../../redux/task/action';
 
 const LogoutButton = () => {
 
+    const user = useAppSelector(x => x.userState.user);
     const dispatch = useAppDispatch();
 
     const logout = async () => {
+    
+        if (!user) {
+            toast.warning('You are already signed out.');
+            return;
+        }
+    
         try {
             await auth.signOut();
             dispatch(TaskActionHelper.setList([]));
@@ -19,9 +26,12 @@ const LogoutButton = () => {
     };
     
     return (
-        <div onClick={logout} className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}>
+        <button 
+            className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px]'}
+            onClick={logout} 
+        >
             <LogoutSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white pl-1'}/>
-        </div>
+        </button>
     )
 }
 

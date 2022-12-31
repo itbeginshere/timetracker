@@ -2,6 +2,7 @@ import BugButton from '../buttons/BugButton'
 import LogoutButton from '../buttons/LogoutButton';
 import NewTaskButton from '../buttons/NewTaskButton';
 import ProfileButton from '../buttons/ProfileButton'
+import StatsButton from '../buttons/StatsButton';
 
 const Controls = () => {
     return (
@@ -10,6 +11,7 @@ const Controls = () => {
                 <BugButton />
                 <ProfileButton />
                 <LogoutButton />
+                <StatsButton />
             </div>
             <div className={'flex flex-row'}>
                 <NewTaskButton />

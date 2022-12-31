@@ -35,8 +35,8 @@ const BugDialog = (props : IBugDialogProps) => {
                 onSubmit={onSave}
             >
                 <Form className={"flex flex-col gap-3"}>
-                    <Textfield name={'subject'} label={'Subject'}/>
-                    <Textfield name={'message'} label={'Message'}/>
+                    <Textfield name={'issue'} label={'Issue'}/>
+                    <Textfield name={'description'} label={'Description'}/>
                     <div className={'flex flex-row justify-end items-center gap-5'}>
                         <SubmitButton label={'SEND'} />
                         <CancelButton label={'CANCEL'} onClick={onClose} />
