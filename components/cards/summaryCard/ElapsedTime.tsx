@@ -30,7 +30,7 @@ const ElapsedTime = (props : IElapsedTimeProps) => {
         }
 
         if (result === '') {
-            result = 'No looged tasks.';
+            result = 'No logged tasks.';
         }
 
         return result;
