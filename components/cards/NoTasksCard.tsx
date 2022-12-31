@@ -11,7 +11,7 @@ const NoTasksCard = () => {
             {
                 isUserLoading ? 
                     <LoadingIndicator/> :
-                    <span className={'text-lg font-semibold text-center'}>{user ? 'You have yet to start a task!' : 'You need to be signed in to create tasks.'}</span>
+                    <span className={'text-lg font-semibold text-center'}>{user ? 'There are no tasks.' : 'You need to be signed in to create tasks.'}</span>
             }
 
         </div>

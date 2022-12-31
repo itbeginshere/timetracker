@@ -54,11 +54,13 @@ export class TaskHelper {
                     
                     thunkApi.dispatch(TaskActionHelper.setIsLoading(true));
                     
-                    const tasks : Array<ITask> = [];
+                    let tasks : Array<ITask> = [];
 
                     querySnapshot.forEach((doc) => {
                         tasks.push({ ...doc.data(), refId: doc.id});
                     });
+
+                    tasks = tasks.sort((a, b) => -a.createdOn + b.createdOn);
 
                     thunkApi.dispatch(TaskActionHelper.setList(tasks));
 

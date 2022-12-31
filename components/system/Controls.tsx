@@ -6,7 +6,7 @@ import StatsButton from '../buttons/StatsButton';
 
 const Controls = () => {
     return (
-        <div className={'flex flex-row gap-4 pb-4 justify-between flex-wrap	'} style={{ flex: '0 0 auto' }}>
+        <div className={'flex flex-row gap-4 pb-4 justify-between flex-wrap	'}>
             <div className={'flex flex-row gap-4'}>
                 <BugButton />
                 <ProfileButton />
