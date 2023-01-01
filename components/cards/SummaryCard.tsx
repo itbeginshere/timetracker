@@ -8,31 +8,50 @@ const SummaryCard = () => {
     
     const tasks = useAppSelector(x => x.taskState.tasks);
     const isTaskLoading = useAppSelector(x => x.taskState.isLoading);
+    const startDate = useAppSelector(x => x.taskState.startDate);
+    const endDate = useAppSelector(x => x.taskState.endDate);
+    const showCompleted = useAppSelector(x => x.taskState.completed);
     
+    const filteredTasks = useMemo(() => {
+
+        let result = tasks.filter(x => showCompleted ? true : !x.completed);
+
+        if (startDate) {
+            result = result.filter(x => x.createdOn >= startDate.valueOf());
+        }
+
+        if (endDate) {
+            result = result.filter(x => x.createdOn <= endDate.valueOf());
+        }
+
+        return result;
+
+    }, [tasks, showCompleted, startDate, endDate]);
+
     const savedTime = useMemo(() => {
 
-        const totalDuration = tasks.reduce((acc, item) => {
+        const totalDuration = filteredTasks.reduce((acc, item) => {
             return acc + item.duration;
         }, 0);
 
         return moment.duration(totalDuration);
 
-    }, [tasks]);
+    }, [filteredTasks]);
 
     const completedCount = useMemo(() => {
-        return tasks.filter(x => x.completed).length;
-    }, [tasks]);
+        return filteredTasks.filter(x => x.completed).length;
+    }, [filteredTasks]);
 
     const inProgressCount = useMemo(() => {
-        return tasks.filter(x => !x.completed).length;
-    }, [tasks]);
+        return filteredTasks.filter(x => !x.completed).length;
+    }, [filteredTasks]);
 
     const completionPercentage = useMemo(() => {
         
-        if (completedCount <= 0 || tasks.length <= 0) return 0;
+        if (completedCount <= 0 || filteredTasks.length <= 0) return 0;
         
-        return Math.round((completedCount / tasks.length) * 100);
-    },[completedCount, tasks]);
+        return Math.round((completedCount / filteredTasks.length) * 100);
+    },[completedCount, filteredTasks]);
 
     return (
         <div 
