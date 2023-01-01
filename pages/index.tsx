@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import Appbar from '../components/system/Appbar'
 import Background from '../components/system/Background'
 import Content from '../components/system/Content'
-import Controls from '../components/system/Controls'
+import SpeedDial from '../components/system/SpeedDial'
 import { auth } from '../firebase'
 import { UserHelper } from '../models/user/user'
 import { useAppDispatch } from '../redux/hooks'
@@ -16,7 +16,6 @@ export default function Home() {
   useEffect(() => {
     auth.onAuthStateChanged(async (authState) => {
       dispatch(UserActionHerlper.setIsLoading(true));
-      console.log(authState);
       await dispatch(UserActionHerlper.setUser(UserHelper.convertFirebaseAuthToUser(authState)));
       dispatch(UserActionHerlper.setIsLoading(false));
     });
@@ -34,8 +33,8 @@ export default function Home() {
         <Background />
         <Appbar />
         <Content />
-        <Controls />
       </div>
+      <SpeedDial />
     </>
   )
 }

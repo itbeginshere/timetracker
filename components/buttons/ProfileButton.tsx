@@ -7,8 +7,14 @@ import LoginDialog from '../dialogs/LoginDialog';
 import ProfileDialog from '../dialogs/ProfileDialog';
 import ProfileSVG from '../svgs/ProfileSVG';
 
-const ProfileButton = () => {
+interface IProfileButtonProps {
+    className ?: string;
+}
+
+const ProfileButton = (props : IProfileButtonProps) => {
     
+    const { className } = props;
+
     const [open, setOpen] = useState<boolean>(false);
     const [loginIsLoading, setLoginIsLoading] = useState<boolean>(false);
     const [profileIsLoading, setProfileIsLoading] = useState<boolean>(false);
@@ -83,9 +89,12 @@ const ProfileButton = () => {
 
     return (
         <>
-            <div onClick={openDialog} className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}>
+            <button 
+                onClick={openDialog} 
+                className={`group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg ${className ?? ''}`}
+            >
                 <ProfileSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
-            </div>
+            </button>
             {
                 (open && !!currentUser) && (
                     <ProfileDialog 

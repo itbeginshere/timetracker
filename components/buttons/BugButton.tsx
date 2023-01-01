@@ -6,8 +6,14 @@ import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../../redux/hooks';
 
-const BugButton = () => {
+interface IBugButtonProps {
+    className ?: string;
+}
+
+const BugButton = (props : IBugButtonProps) => {
     
+    const { className } = props;
+
     const user = useAppSelector(x => x.userState.user);
 
     const [open, setOpen] = useState<boolean>(false);
@@ -54,12 +60,12 @@ const BugButton = () => {
     
     return (
         <>
-            <div 
-                className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px] cursor-pointer'}
+            <button 
+                className={`group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg ${className ?? ''}`}
                 onClick={openDialog} 
             >
                 <BugSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
-            </div>
+            </button>
             {
                 open && (
                     <BugDialog 

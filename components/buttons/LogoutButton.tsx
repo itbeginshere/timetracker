@@ -4,7 +4,13 @@ import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import TaskActionHelper from '../../redux/task/action';
 
-const LogoutButton = () => {
+interface ILoginButtonProps {
+    className ?: string;
+}
+
+const LogoutButton = (props : ILoginButtonProps) => {
+
+    const { className } = props;
 
     const user = useAppSelector(x => x.userState.user);
     const dispatch = useAppDispatch();
@@ -27,7 +33,7 @@ const LogoutButton = () => {
     
     return (
         <button 
-            className={'transition group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg hover:translate-y-[-4px]'}
+            className={`group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg ${className ?? ''}`}
             onClick={logout} 
         >
             <LogoutSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white pl-1'}/>

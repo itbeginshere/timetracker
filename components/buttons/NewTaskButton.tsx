@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { ITaskFormValues, TaskHelper } from '../../models/task/task';
 import TaskDialog from '../dialogs/TaskDialog';
+import PlusSVG from '../svgs/PlusSVG';
 
-const NewTaskButton = () => {
+interface INewTaskButtonProps {
+    className ?: string;
+}
+
+const NewTaskButton = (props : INewTaskButtonProps) => {
    
+    const { className } = props;
+
     const [open, setOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -31,12 +38,10 @@ const NewTaskButton = () => {
     return (
         <>
             <button 
-                onClick={openDialog}
-                className={'transition rounded-full bg-primary hover:bg-secondary hover:shadow-lg py-3 px-9 w-full md:w-fit hover:translate-y-[-4px] '}
+                onClick={openDialog} 
+                className={`group bg-white hover:bg-secondary rounded-full p-1 hover:shadow-lg ${className ?? ''}`}
             >
-                <span className={'text-white font-semibold uppercase whitespace-nowrap	'}>
-                    New Task
-                </span>
+                <PlusSVG width={50} height={50} className={'transition fill-secondary group-hover:fill-white'}/>
             </button>
             {
                 open && (
