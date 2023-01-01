@@ -14,15 +14,15 @@ const ToggleButton = (props : IToggleButtonProps) => {
     
     return (
          <button 
-            className={'transition flex flex-row h-[38px] items-center bg-secondary hover:bg-primary hover:shadow-lg rounded-lg px-2 py-1 gap-2'}
+            className={'flex flex-row h-[38px] items-center rounded-lg py-1 gap-2'}
             onClick={onChange}
         >
             {
                 value ? 
-                    <VisibilitySVG className={'fill-white'} /> :
-                    <HiddenSVG className={'fill-white'}/>
+                    <VisibilitySVG className={'fill-secondary'} /> :
+                    <HiddenSVG className={'fill-secondary'}/>
             }
-            <span className={'text-white font-medium'}>{label}</span>
+            <span className={'text-black font-medium'}>{label}</span>
         </button>
     );
 }

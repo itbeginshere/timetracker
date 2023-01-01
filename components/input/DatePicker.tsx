@@ -3,20 +3,26 @@ import React from 'react';
 
 interface IDatePickerProps {
     value : moment.Moment | null;
+    name : string;
+    label : string;
     onChange : (event : React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const DatePicker = (props : IDatePickerProps) => {
 
-    const { value, onChange } = props;
+    const { value, name, label } = props;
+    const { onChange } = props;
 
     return (
-           <input 
+        <div className={'flex flex-col items-center sm:flex-row'}>
+            <label htmlFor={name} className={'w-[120px] font-semibold'}>{label}</label>
+            <input 
                 type={'date'} 
-                className={'px-2 py-1 rounded-lg outline-none border-2 border-white active:border-primary focus:border-primary'} 
+                className={'px-2 py-1 rounded-lg outline-none border-2 border-grey-800 active:border-primary focus:border-primary'} 
                 onChange={onChange} 
                 value={value?.format('YYYY-MM-DD')} 
             />
+        </div>
     );
 }
 
