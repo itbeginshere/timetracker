@@ -1,11 +1,11 @@
 import { ErrorMessage, Field, useField } from 'formik';
 
-interface ITextfieldProps {
+interface ITextAreaProps {
     label : string;
     name : string;
 }
 
-const Textfield = (props : ITextfieldProps) => {
+const TextArea = (props : ITextAreaProps) => {
 
     const { label, name } = props;
 
@@ -15,11 +15,11 @@ const Textfield = (props : ITextfieldProps) => {
         <div className={'flex flex-col'}>
             <div className={'flex flex-col sm:flex-row gap-3'}>
                 <label htmlFor={name} className={`w-[120px] font-semibold ${meta.error && meta.touched ? 'text-red-600' : ''}`}>{label}</label>
-                <Field id={name} name={name} placeholder={label} type={'input'} className={`flex-1 border-2 border-gray-200 rounded-lg ${meta.error && meta.touched ? 'border-red-600' : ''}`}/>
+                <Field id={name} name={name} placeholder={label} type={'text'} as={'textarea'} className={`flex-1 border-2 border-gray-200 rounded-lg ${meta.error && meta.touched ? 'border-red-600' : ''}`}/>
             </div>
             <ErrorMessage name={name} component={'span'} className={'text-red-600 text-sm font-semibold'}/>
         </div>
     );
 }
 
-export default Textfield;
+export default TextArea;
