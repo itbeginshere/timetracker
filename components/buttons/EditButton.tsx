@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useToggle from '../../hooks/useToggle';
 import { ITask, ITaskFormValues, TaskHelper } from '../../models/task/task';
 import TaskDialog from '../dialogs/TaskDialog';
 import EditSVG from '../svgs/EditSVG';
@@ -12,24 +12,16 @@ const EditButton = (props : IEditButtonProps) => {
 
     const { task, disabled } = props;
 
-    const [open, setOpen] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const openDialog = () => {
-        setOpen(true);
-    };
-
-    const closeDialog = () => {
-        setOpen(false);
-    };
+    const [open, openDialog, closeDialog] = useToggle();
+    const [loading, startLoding, endLoading] = useToggle();
 
     const saveTask = async (values : ITaskFormValues) => {
         
-        setIsLoading(true);
+        startLoding();
 
         const result = await TaskHelper.update(values);
 
-        setIsLoading(false);
+        endLoading();
 
         if (result) {
             closeDialog();
@@ -49,7 +41,7 @@ const EditButton = (props : IEditButtonProps) => {
             {
                 open && (
                     <TaskDialog 
-                        loading={isLoading}
+                        loading={loading}
                         task={task}
                         onSave={saveTask}
                         onClose={closeDialog}

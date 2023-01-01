@@ -9,7 +9,7 @@ const Spinner = (props : ISpinnerProps) => {
 
     const { label, name } = props;
     
-    const [field, meta] = useField(name);
+    const [_, meta] = useField(name);
 
     return (
         <div className={'flex flex-col'}>

@@ -7,6 +7,7 @@ import CompletedButton from '../buttons/CompletedButton';
 import { ITask, TaskHelper } from '../../models/task/task';
 import { useAppSelector } from '../../redux/hooks';
 import LoadingIndicator from '../common/LoadingIndicator';
+import useToggle from '../../hooks/useToggle';
 
 interface ITaskCardProps {
     task : ITask;
@@ -18,8 +19,8 @@ const TaskCard = (props : ITaskCardProps) => {
 
     const isTaskLoading = useAppSelector(x => x.taskState.isLoading); 
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isCounting, setIsCounting] = useState<boolean>(false);
+    const [loading, startLoading, endLoading] = useToggle();
+    const [counting, _, __, toggleCounting] = useToggle();
     const [duration, setDuration] = useState<number>(task.duration);
 
     useEffect(() => {
@@ -29,7 +30,7 @@ const TaskCard = (props : ITaskCardProps) => {
     useEffect(() => {
       let interval : any = undefined;
 
-      if (!isCounting) {
+      if (!counting) {
         clearInterval(interval);
         return;
       }
@@ -40,36 +41,36 @@ const TaskCard = (props : ITaskCardProps) => {
       
       return () => clearInterval(interval);
 
-    }, [isCounting]);
+    }, [counting]);
 
     const togglIsCounting = async () => {
     
-        setIsLoading(true);
+        startLoading();
 
-        if (isCounting) {
+        if (counting) {
             await TaskHelper.pause(task);
         } else {
             await TaskHelper.play(task);
         }
 
-        setIsLoading(false);
+        endLoading();
         
-        setIsCounting(!isCounting);
+        toggleCounting();
     };
 
         
     const toggleCompleted = async () => {
         
-        setIsLoading(true);
+        startLoading();
 
         await TaskHelper.completed(task.completed, task.refId);
 
-        setIsLoading(false);
+        endLoading();
         
     }
 
     return (
-        <div className={`relative bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 flex flex-col  w-full box-border ${isCounting ? 'border-primary' : 'border-neutral-900'}`}>
+        <div className={`relative bg-white shadow-lg rounded-2xl py-3 px-5 border-l-4 flex flex-col  w-full box-border ${counting ? 'border-primary' : 'border-neutral-900'}`}>
             <div className={'flex flex-row justify-between pb-7'}>
                 <div className={'flex flex-col'}>
                     <span className={'text-base md:text-xl font-semibold'}>{task.name}</span>
@@ -82,11 +83,11 @@ const TaskCard = (props : ITaskCardProps) => {
                 </div>
             </div>
             <div className={'flex flex-row gap-2 items-center'}>
-                <PlayButton disabled={task.completed} isCounting={isCounting} onClick={togglIsCounting}/>
-                <Duration value={duration} isCounting={isCounting}/>
+                <PlayButton disabled={task.completed} isCounting={counting} onClick={togglIsCounting}/>
+                <Duration value={duration} isCounting={counting}/>
             </div>
             {
-                (isTaskLoading || isLoading) && (
+                (isTaskLoading || loading) && (
                     <LoadingIndicator />
                 )
             }

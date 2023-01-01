@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useToggle from '../../hooks/useToggle';
 import { ITaskFormValues, TaskHelper } from '../../models/task/task';
 import TaskDialog from '../dialogs/TaskDialog';
 import PlusSVG from '../svgs/PlusSVG';
@@ -11,24 +11,16 @@ const NewTaskButton = (props : INewTaskButtonProps) => {
    
     const { className } = props;
 
-    const [open, setOpen] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const openDialog = () => {
-        setOpen(true);
-    };
-
-    const closeDialog = () => {
-        setOpen(false);
-    };
+    const [open, openDialog, closeDialog] = useToggle();
+    const [loading, startLoding, endLoading] = useToggle();
 
     const saveTask = async (values : ITaskFormValues) => {
         
-        setIsLoading(true);
+        startLoding();
 
         const result = await TaskHelper.create(values);
 
-        setIsLoading(false);
+        endLoading();
         
         if (result) {
             closeDialog();
@@ -46,7 +38,7 @@ const NewTaskButton = (props : INewTaskButtonProps) => {
             {
                 open && (
                     <TaskDialog 
-                        loading={isLoading}
+                        loading={loading}
                         onClose={closeDialog}
                         onSave={saveTask}
                     />

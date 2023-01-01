@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import {  useState } from 'react';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
+import useToggle from '../../hooks/useToggle';
 import { ILoginFormValues, IUserFormValues } from '../../models/user/user';
 import LoginDialog from '../dialogs/LoginDialog';
 import ProfileDialog from '../dialogs/ProfileDialog';
@@ -15,18 +15,10 @@ const ProfileButton = (props : IProfileButtonProps) => {
     
     const { className } = props;
 
-    const [open, setOpen] = useState<boolean>(false);
-    const [loginIsLoading, setLoginIsLoading] = useState<boolean>(false);
-    const [profileIsLoading, setProfileIsLoading] = useState<boolean>(false);
+    const [open, openDialog, closeDialog] = useToggle();
+    const [loginLoading, startLoginLoding, endLoginLoading] = useToggle();
+    const [profileLoading, startProfileLoding, endProfileLoading] = useToggle();
     
-    const openDialog = () => {
-        setOpen(true);
-    };
-
-    const closeDialog = () => {
-        setOpen(false);
-    };
-
     const saveProfile = async (values : IUserFormValues) => {
         
         try {
@@ -35,7 +27,7 @@ const ProfileButton = (props : IProfileButtonProps) => {
                 return;
             }
 
-            setProfileIsLoading(true);
+            startProfileLoding();
 
             await updateProfile(auth.currentUser, {
                 ...values
@@ -47,7 +39,7 @@ const ProfileButton = (props : IProfileButtonProps) => {
         } catch (ex) {
             toast.error('Error: Something went wrong while saving your profile.')
         } finally {
-            setProfileIsLoading(false);
+            endProfileLoading();
         }
         
     };
@@ -55,7 +47,7 @@ const ProfileButton = (props : IProfileButtonProps) => {
     const submitSignIn = async (values : ILoginFormValues) => {
         
         try {
-            setLoginIsLoading(true);
+            startLoginLoding();
 
             await signInWithEmailAndPassword(auth, values.email, values.password);
             
@@ -64,14 +56,14 @@ const ProfileButton = (props : IProfileButtonProps) => {
         } catch (ex) {
             toast.error('Error: Something went wrong while trying to sign in.');
         } finally {
-            setLoginIsLoading(false);
+            endLoginLoading();
         }
 
     }
 
     const submitRegister = async (values : ILoginFormValues) => {
         try {
-            setLoginIsLoading(true);
+            startLoginLoding();
             
             await createUserWithEmailAndPassword(auth, values.email, values.password);
             
@@ -80,7 +72,7 @@ const ProfileButton = (props : IProfileButtonProps) => {
         } catch (ex) {
             toast.error('Error: Something went wrong while trying to register.');
         } finally {
-            setLoginIsLoading(false);
+            endLoginLoading();
         }
 
     }
@@ -98,7 +90,7 @@ const ProfileButton = (props : IProfileButtonProps) => {
             {
                 (open && !!currentUser) && (
                     <ProfileDialog 
-                        loading={profileIsLoading}
+                        loading={profileLoading}
                         user={currentUser} 
                         onClose={closeDialog} 
                         onSave={saveProfile} 
@@ -108,7 +100,7 @@ const ProfileButton = (props : IProfileButtonProps) => {
             {
                 (open && !currentUser) && (
                     <LoginDialog 
-                        loading={loginIsLoading}
+                        loading={loginLoading}
                         onClose={closeDialog} 
                         onRegister={submitRegister} 
                         onSignIn={submitSignIn}

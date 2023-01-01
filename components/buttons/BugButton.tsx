@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { IBugFormValues } from '../../models/bug/bug';
 import BugDialog from '../dialogs/BugDialog';
 import BugSVG from '../svgs/BugSVG'
 import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../../redux/hooks';
+import useToggle from '../../hooks/useToggle';
 
 interface IBugButtonProps {
     className ?: string;
@@ -16,16 +16,8 @@ const BugButton = (props : IBugButtonProps) => {
 
     const user = useAppSelector(x => x.userState.user);
 
-    const [open, setOpen] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const openDialog = () => {
-        setOpen(true);
-    };
-
-    const closeDialog = () => {
-        setOpen(false);
-    };
+    const [open, openDialog, closeDialog] = useToggle();
+    const [loading, startLoding, endLoading] = useToggle();
 
     const reportBug = async (values : IBugFormValues) => {
        
@@ -35,7 +27,7 @@ const BugButton = (props : IBugButtonProps) => {
         }
 
         try {
-            setIsLoading(true);
+            startLoding();
         
             emailjs.init(process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY ?? '');
 
@@ -53,7 +45,7 @@ const BugButton = (props : IBugButtonProps) => {
         } catch (ex) {
             toast.error('Error: Could not send the report.');
         } finally {
-            setIsLoading(false);
+            endLoading();
         }
         
     };
@@ -69,7 +61,7 @@ const BugButton = (props : IBugButtonProps) => {
             {
                 open && (
                     <BugDialog 
-                        loading={isLoading}
+                        loading={loading}
                         onSave={reportBug}
                         onClose={closeDialog}
                     />

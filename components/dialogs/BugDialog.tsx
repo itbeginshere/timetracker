@@ -5,6 +5,7 @@ import CancelButton from '../buttons/CancelButton';
 import SubmitButton from '../buttons/SubmitButton';
 import TextArea from '../input/TextArea';
 import Textfield from '../input/Textfield';
+import DialogActionWrapper from './common/DialogActionWrapper';
 import DialogHeader from './common/DialogHeader';
 import DialogWrapper from './common/DialogWrapper';
 
@@ -28,7 +29,7 @@ const BugDialog = (props : IBugDialogProps) => {
     }, []);
 
     return (
-       <DialogWrapper open={true} loading={loading} onClose={onClose}>
+       <DialogWrapper loading={loading} onClose={onClose}>
             <DialogHeader title={'Report an Issue'}/>
             <Formik
                 initialValues={formValues}
@@ -38,10 +39,10 @@ const BugDialog = (props : IBugDialogProps) => {
                 <Form className={"flex flex-col gap-3"}>
                     <Textfield name={'issue'} label={'Issue'}/>
                     <TextArea name={'description'} label={'Description'}/>
-                    <div className={'flex flex-row justify-end items-center gap-5'}>
+                    <DialogActionWrapper>
                         <SubmitButton label={'SEND'} />
                         <CancelButton label={'CANCEL'} onClick={onClose} />
-                    </div>
+                    </DialogActionWrapper>
                 </Form>
             </Formik>
        </DialogWrapper>

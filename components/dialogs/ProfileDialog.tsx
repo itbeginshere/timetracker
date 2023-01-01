@@ -5,6 +5,7 @@ import { IUserFormValues, UserHelper } from '../../models/user/user';
 import CancelButton from '../buttons/CancelButton';
 import SubmitButton from '../buttons/SubmitButton';
 import Textfield from '../input/Textfield';
+import DialogActionWrapper from './common/DialogActionWrapper';
 import DialogHeader from './common/DialogHeader';
 import DialogWrapper from './common/DialogWrapper';
 
@@ -25,7 +26,7 @@ const ProfileDialog = (props : IProfileDialogProps) => {
     }, []);
 
     return (
-        <DialogWrapper open={true} loading={loading} onClose={onClose}>
+        <DialogWrapper loading={loading} onClose={onClose}>
             <DialogHeader title={user.displayName ?? 'No-Name'}/>
             <Formik
                 initialValues={UserHelper.getFormValuesFromFirebaseUser(user)}
@@ -35,10 +36,10 @@ const ProfileDialog = (props : IProfileDialogProps) => {
                 <Form className={'flex flex-col gap-3'}>
                     <Textfield name={'email'} label={'Email'}/>
                     <Textfield name={'displayName'} label={'Username'}/>
-                    <div className={'flex flex-row justify-end items-center gap-5'}>
+                    <DialogActionWrapper>
                         <SubmitButton label={'SAVE'}/>
                         <CancelButton label={'CANCEL'} onClick={onClose}/>
-                    </div>
+                    </DialogActionWrapper>
                 </Form>
             </Formik>
         </DialogWrapper>

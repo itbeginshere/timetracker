@@ -26,7 +26,7 @@ const TaskDialog = (props : ITaskDialogProps) => {
     }, []);
 
     return (
-        <DialogWrapper open={true} loading={loading} onClose={onClose}>
+        <DialogWrapper loading={loading} onClose={onClose}>
             <DialogHeader title={task ? 'Update Task' : 'Create Task'}/>
             <Formik
                 initialValues={TaskHelper.getFormValues(task)}

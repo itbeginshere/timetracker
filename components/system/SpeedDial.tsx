@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useToggle from '../../hooks/useToggle';
 import BugButton from '../buttons/BugButton';
 import LogoutButton from '../buttons/LogoutButton';
 import NewTaskButton from '../buttons/NewTaskButton';
@@ -9,12 +9,8 @@ import PlusSVG from '../svgs/PlusSVG';
 
 const SpeedDial = () => {
     
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, _, __, toggleOpen] = useToggle();
     
-    const toggleOpen = () => {
-        setOpen(!open);
-    };
-
     return (
       <div className={'absolute bottom-4 right-[10%] xl:right-[20%]'}>
         <StatsButton className={`absolute transition hover:translate-y-[-354px] ${open ? 'translate-y-[-350px] opacity-100' : 'translate-y-[1000px] opacity-0'} right-0`} />

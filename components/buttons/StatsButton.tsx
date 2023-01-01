@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import useToggle from '../../hooks/useToggle';
 import StatsDialog from '../dialogs/StatsDailog';
 import StatsSVG from '../svgs/StatsSVG';
 
@@ -10,15 +10,7 @@ const StatsButton = (props : IStatsButtonProps) => {
     
     const { className } = props;
 
-    const [open, setOpen] = useState<boolean>(false);
-
-    const openDialog = () => {
-        setOpen(true);
-    };
-
-    const closeDialog = () => {
-        setOpen(false);
-    };
+    const [open, openDialog, closeDialog] = useToggle();
     
     return (
         <>

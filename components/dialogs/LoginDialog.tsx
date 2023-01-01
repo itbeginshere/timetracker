@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import useToggle from '../../hooks/useToggle';
 import { ILoginFormValues, UserHelper } from '../../models/user/user';
 import Textfield from '../input/Textfield';
 import DialogHeader from './common/DialogHeader';
@@ -17,23 +18,15 @@ const LoginDialog = (props : ILoginDialogProps) => {
     const { loading } = props;
     const { onSignIn, onRegister, onClose } = props;
     
-    const [isRegister, setIsRegister] = useState<boolean>(false);
-
-    const switchToRegisterForm = () => {
-        setIsRegister(true);
-    };
-
-    const switchToLoginForm = () => {
-        setIsRegister(false);
-    };
+    const [register, switchToRegisterForm, switchToLoginForm] = useToggle();
 
     const validationSchema = useMemo(() => {
         return UserHelper.getLoginFormValidationSchema();
     }, []);
 
     return (
-        isRegister ? (
-                <DialogWrapper open={true} loading={loading} onClose={onClose}>
+        register ? (
+                <DialogWrapper loading={loading} onClose={onClose}>
                     <DialogHeader title={'Register'}/>
                     <Formik
                         initialValues={UserHelper.getLoginFormValues()}
@@ -55,7 +48,7 @@ const LoginDialog = (props : ILoginDialogProps) => {
                     </Formik>
                 </DialogWrapper>
             ) : (
-                <DialogWrapper open={true} loading={loading} onClose={onClose}>
+                <DialogWrapper loading={loading} onClose={onClose}>
                     <DialogHeader title={'Sign-In'}/>
                     <Formik
                         initialValues={UserHelper.getLoginFormValues()}

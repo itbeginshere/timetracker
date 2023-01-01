@@ -3,7 +3,7 @@ import { CSSProperties } from 'react';
 
 const Background = () => {
    
-    const styles : CSSProperties = { objectFit: 'cover', };
+    const styles : CSSProperties = { objectFit: 'cover' };
    
     return (
         <Image 

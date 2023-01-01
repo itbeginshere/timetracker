@@ -33,7 +33,7 @@ const FilterDialog = (props : IFilterDialogProps) => {
     } 
 
     return (
-        <DialogWrapper open={true} loading={false} onClose={onClose}>
+        <DialogWrapper loading={false} onClose={onClose}>
             <DialogHeader title={'Task Filters'}/>
             <div className={'flex flex-col gap-3 items-start'}>
                 <DatePicker label={'Start Date'} name={'startDate'} value={startDate} onChange={onStartDateChange}/>
