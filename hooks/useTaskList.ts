@@ -20,8 +20,6 @@ const useTaskList = () : UseTaskListType => {
 
         if (!user) return;
 
-        if (tasks.length) return;
-
         dispatch(TaskHelper.getListThunk());
 
         return () => TaskHelper.severConnection();
