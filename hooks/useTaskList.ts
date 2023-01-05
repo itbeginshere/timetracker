@@ -1,30 +1,17 @@
 import moment from 'moment';
-import { useEffect, useMemo } from 'react';
-import { ITask, TaskHelper } from '../models/task/task';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { useMemo } from 'react';
+import { ITask } from '../models/task/task';
+import { useAppSelector } from '../redux/hooks';
 
 type UseTaskListType = [boolean, Array<ITask>, moment.Duration, number, number, number];
 
 const useTaskList = () : UseTaskListType => {
 
-    const user = useAppSelector(x => x.userState.user);
     const tasks = useAppSelector(x => x.taskState.tasks);
     const isLoading = useAppSelector(x => x.taskState.isLoading);
     const startDate = useAppSelector(x => x.taskState.startDate);
     const endDate = useAppSelector(x => x.taskState.endDate);
     const showCompleted = useAppSelector(x => x.taskState.completed);
-    
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-
-        if (!user) return;
-
-        dispatch(TaskHelper.getListThunk());
-
-        return () => TaskHelper.severConnection();
-
-    }, [user, tasks, dispatch]);
 
     const filteredTasks = useMemo(() => {
 
